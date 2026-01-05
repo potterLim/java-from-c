@@ -1,0 +1,69 @@
+############################
+# OS / Environment
+############################
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+############################
+# IDE / Editor
+############################
+
+# VS Code
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+############################
+# Java build outputs
+############################
+
+# Maven / Gradle
+target/
+build/
+out/
+
+############################
+# Java runtime artifacts
+############################
+
+*.class
+*.jar
+*.war
+*.ear
+
+############################
+# Lecture materials to ignore
+############################
+
+# PowerPoint files
+*.ppt
+*.pptx
+
+# Python scripts
+*.py
+
+# PowerShell scripts
+*.ps1
+
+############################
+# Logs / temp files
+############################
+
+*.log
+*.tmp
+*.temp
+*.swp
+*.bak
+*~
+
+############################
+# Misc
+############################
+
+# OS-specific
+.DS_Store
