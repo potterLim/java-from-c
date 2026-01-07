@@ -4,59 +4,59 @@ import java.lang.StringBuilder;
 
 public final class ExpressivenessExample {
     public static void main(String[] args) {
-        PrintHeader("Expressiveness");
+        printHeader("Expressiveness");
 
-        DemoOverloading();
-        DemoStringBuilder();
+        demoOverloading();
+        demoStringBuilder();
     }
 
-    private static void DemoOverloading() {
-        PrintSectionTitle("Method overloading: same name, different parameter lists");
+    private static void demoOverloading() {
+        printSectionTitle("Method overloading: same name, different parameter lists");
 
-        Log("System started");
-        Log("AUTH", "Login succeeded");
-        Log("PAYMENT", "Charge accepted", 202);
+        log("System started");
+        log("AUTH", "Login succeeded");
+        log("PAYMENT", "Charge accepted", 202);
 
-        int total = Add(3, 4);
-        double average = Add(3.0, 4.0) / 2.0;
+        int total = add(3, 4);
+        double average = add(3.0, 4.0) / 2.0;
 
         System.out.println("Add(int, int) -> " + total);
         System.out.println("Add(double, double) / 2 -> " + average);
     }
 
-    private static void Log(String message) {
+    private static void log(String message) {
         System.out.println("[INFO] " + message);
     }
 
-    private static void Log(String category, String message) {
+    private static void log(String category, String message) {
         System.out.println("[" + category + "] " + message);
     }
 
-    private static void Log(String category, String message, int code) {
+    private static void log(String category, String message, int code) {
         System.out.println("[" + category + "-" + code + "] " + message);
     }
 
-    private static int Add(int a, int b) {
+    private static int add(int a, int b) {
         return a + b;
     }
 
-    private static double Add(double a, double b) {
+    private static double add(double a, double b) {
         return a + b;
     }
 
-    private static void DemoStringBuilder() {
-        PrintSectionTitle("StringBuilder: build strings efficiently");
+    private static void demoStringBuilder() {
+        printSectionTitle("StringBuilder: build strings efficiently");
 
         String[] items = new String[]{ "apple", "banana", "carrot", "donut" };
 
-        String csv = BuildCsv(items);
+        String csv = buildCsv(items);
         System.out.println("CSV: " + csv);
 
         System.out.println();
-        System.out.println(BuildNumberReport(6));
+        System.out.println(buildNumberReport(6));
     }
 
-    private static String BuildCsv(String[] items) {
+    private static String buildCsv(String[] items) {
         // Join items into a single line without repeated String concatenation.
         StringBuilder sb = new StringBuilder(32);
 
@@ -71,7 +71,7 @@ public final class ExpressivenessExample {
         return sb.toString();
     }
 
-    private static String BuildNumberReport(int n) {
+    private static String buildNumberReport(int n) {
         // Build a multi-line report using append chains.
         StringBuilder sb = new StringBuilder(64);
 
@@ -89,12 +89,12 @@ public final class ExpressivenessExample {
         return sb.toString();
     }
 
-    private static void PrintHeader(String title) {
+    private static void printHeader(String title) {
         System.out.println(title + " Example");
         System.out.println("========================================");
     }
 
-    private static void PrintSectionTitle(String title) {
+    private static void printSectionTitle(String title) {
         System.out.println();
         System.out.println("[" + title + "]");
         System.out.println("----------------------------------------");
