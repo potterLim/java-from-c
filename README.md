@@ -18,15 +18,15 @@ Java는 C 언어에 비해 개발자가 보다 편리하게 코드를 작성할 
 
 각 장별 학습 노트는 [`notes/`](./notes) 디렉토리에, 예시 코드는 [`example-code/`](./example-code) 디렉토리에 정리되어 있습니다.
 
-| 번호 | 주제                         | 노트                                                 | 예시 코드        |
-| :--  | :--------------------------- | :--------------------------------------------------- | :--------------: |
-| 01   | 프로그래밍 언어의 분류       | [01-programming-language-classification]             |                  |
-| 02   | 값과 참조                    | [02-values-and-references]                           | [example-02]     |
-| 03   | 언어 차원의 표현력 확장      | [03-enhancing-expressiveness-at-the-language-level]  | [example-03]     |
-| 04   | 언어 차원의 데이터 관리      | [04-data-management-at-the-language-level]           | [example-04]     |
-| 05   | 언어 차원의 문법적 편의 기능 | ~~[05-syntactic-convenience-at-the-language-level]~~ | ~~[example-05]~~ |
-| 06   | ~~타입을 정의하는 도구~~     | ~~[06-tools-for-defining-types]~~                    | ~~[example-06]~~ |
-| 07   | ~~예외 처리~~                | ~~[07-exception-handling]~~                          | ~~[example-07]~~ |
+| 번호 | 주제                         | 노트                                                | 예시 코드        |
+| :--  | :--------------------------- | :-------------------------------------------------- | :--------------: |
+| 01   | 프로그래밍 언어의 분류       | [01-programming-language-classification]            |                  |
+| 02   | 값과 참조                    | [02-values-and-references]                          | [example-02]     |
+| 03   | 언어 차원의 표현력 확장      | [03-enhancing-expressiveness-at-the-language-level] | [example-03]     |
+| 04   | 언어 차원의 데이터 관리      | [04-data-management-at-the-language-level]          | [example-04]     |
+| 05   | 언어 차원의 문법적 편의 기능 | [05-syntactic-convenience-at-the-language-level]    | [example-05]     |
+| 06   | ~~타입을 정의하는 도구~~     | ~~[06-tools-for-defining-types]~~                   | ~~[example-06]~~ |
+| 07   | ~~예외 처리~~                | ~~[07-exception-handling]~~                         | ~~[example-07]~~ |
 
 
 ## 실습(Lab)
@@ -61,17 +61,19 @@ Java는 C 언어에 비해 개발자가 보다 편리하게 코드를 작성할 
 
 이 저장소를 통해 공부하시다가 내용, 실습, 설명 등에 대해 궁금한 점이 생기면 언제든지 potterLim0808@gmail.com 으로 문의 주시면 성실히 답변드리겠습니다.
 
-> 최종 수정일: 2026-01-06
+> 최종 수정일: 2026-01-07
 
 
 [01-programming-language-classification]: ./notes/01-programming-language-classification.pdf
 [02-values-and-references]: ./notes/02-values-and-references.pdf
 [03-enhancing-expressiveness-at-the-language-level]: ./notes/03-enhancing-expressiveness-at-the-language-level.pdf
 [04-data-management-at-the-language-level]: ./notes/04-data-management-at-the-language-level.pdf
+[05-syntactic-convenience-at-the-language-level]: ./notes/05-syntactic-convenience-at-the-language-level.pdf
 
 [example-02]: ./example-code/src/main/java/com/example/valuesandreferences/
 [example-03]: ./example-code/src/main/java/com/example/expressiveness/
 [example-04]: ./example-code/src/main/java/com/example/collections/
+[example-05]: ./example-code/src/main/java/com/example/syntacticconvenience/
 
 [lab-01]: ./lab/01-big-number-calculator/SPEC.md
 [lab-02]: ./lab/02-expression-evaluator/SPEC.md
