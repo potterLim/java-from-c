@@ -6,15 +6,15 @@ import java.util.HashSet;
 
 public final class CollectionsExample {
     public static void main(String[] args) {
-        PrintHeader("Collections");
+        printHeader("Collections");
 
-        DemoArrayList();
-        DemoHashSet();
-        DemoHashMap();
+        demoArrayList();
+        demoHashSet();
+        demoHashMap();
     }
 
-    private static void DemoArrayList() {
-        PrintSectionTitle("ArrayList: ordered list, index-based access");
+    private static void demoArrayList() {
+        printSectionTitle("ArrayList: ordered list, index-based access");
 
         ArrayList<String> todoList = new ArrayList<>();
 
@@ -23,42 +23,42 @@ public final class CollectionsExample {
         todoList.add("Have lunch");
 
         System.out.println("Initial list:");
-        PrintArrayList(todoList);
+        printArrayList(todoList);
 
         // Insert at index (shifts elements to the right).
         todoList.add(1, "Take a shower");
 
         System.out.println();
         System.out.println("After insert at index 1:");
-        PrintArrayList(todoList);
+        printArrayList(todoList);
 
         // Update by index.
         todoList.set(2, "Study Java (focused)");
 
         System.out.println();
         System.out.println("After set at index 2:");
-        PrintArrayList(todoList);
+        printArrayList(todoList);
 
         // Remove by index.
         todoList.remove(0);
 
         System.out.println();
         System.out.println("After remove at index 0:");
-        PrintArrayList(todoList);
+        printArrayList(todoList);
 
         System.out.println();
         System.out.println("Size = " + todoList.size());
         System.out.println("IndexOf(\"Have lunch\") = " + todoList.indexOf("Have lunch"));
     }
 
-    private static void PrintArrayList(ArrayList<String> list) {
+    private static void printArrayList(ArrayList<String> list) {
         for (int i = 0; i < list.size(); ++i) {
             System.out.println(i + ": " + list.get(i));
         }
     }
 
-    private static void DemoHashSet() {
-        PrintSectionTitle("HashSet: unique elements, membership check");
+    private static void demoHashSet() {
+        printSectionTitle("HashSet: unique elements, membership check");
 
         HashSet<String> keywords = new HashSet<>();
 
@@ -78,8 +78,8 @@ public final class CollectionsExample {
         System.out.println("Size (unique count) = " + keywords.size());
     }
 
-    private static void DemoHashMap() {
-        PrintSectionTitle("HashMap: key -> value mapping, check key existence");
+    private static void demoHashMap() {
+        printSectionTitle("HashMap: key -> value mapping, check key existence");
 
         HashMap<Integer, String> nameById = new HashMap<>();
 
@@ -111,12 +111,12 @@ public final class CollectionsExample {
         System.out.println("Size = " + nameById.size());
     }
 
-    private static void PrintHeader(String title) {
+    private static void printHeader(String title) {
         System.out.println(title + " Example");
         System.out.println("========================================");
     }
 
-    private static void PrintSectionTitle(String title) {
+    private static void printSectionTitle(String title) {
         System.out.println();
         System.out.println("[" + title + "]");
         System.out.println("----------------------------------------");
