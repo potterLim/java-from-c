@@ -25,7 +25,7 @@ Java는 C 언어에 비해 개발자가 보다 편리하게 코드를 작성할 
 | 03   | 언어 차원의 표현력 확장      | [03-enhancing-expressiveness-at-the-language-level] | [example-03]     |
 | 04   | 언어 차원의 데이터 관리      | [04-data-management-at-the-language-level]          | [example-04]     |
 | 05   | 언어 차원의 문법적 편의 기능 | [05-syntactic-convenience-at-the-language-level]    | [example-05]     |
-| 06   | ~~타입을 정의하는 도구~~     | ~~[06-tools-for-defining-types]~~                   | ~~[example-06]~~ |
+| 06   | 사용자 정의 자료형           | [06-user-defined-types]                             | [example-06]     |
 | 07   | ~~예외 처리~~                | ~~[07-exception-handling]~~                         | ~~[example-07]~~ |
 
 
@@ -69,11 +69,13 @@ Java는 C 언어에 비해 개발자가 보다 편리하게 코드를 작성할 
 [03-enhancing-expressiveness-at-the-language-level]: ./notes/03-enhancing-expressiveness-at-the-language-level.pdf
 [04-data-management-at-the-language-level]: ./notes/04-data-management-at-the-language-level.pdf
 [05-syntactic-convenience-at-the-language-level]: ./notes/05-syntactic-convenience-at-the-language-level.pdf
+[06-user-defined-types]: ./notes/06-user-defined-types.pdf
 
 [example-02]: ./example-code/src/main/java/com/example/valuesandreferences/
 [example-03]: ./example-code/src/main/java/com/example/expressiveness/
 [example-04]: ./example-code/src/main/java/com/example/collections/
 [example-05]: ./example-code/src/main/java/com/example/syntacticconvenience/
+[example-06]: ./example-code/src/main/java/com/example/userdefinedtypes/
 
 [lab-01]: ./lab/01-big-number-calculator/SPEC.md
 [lab-02]: ./lab/02-expression-evaluator/SPEC.md
