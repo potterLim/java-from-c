@@ -1,36 +1,33 @@
 # Java 프로그래밍
 
-이 저장소는 C 언어를 비롯한 다른 프로그래밍 언어를 통해 이미 기초적인 코딩 경험을 갖춘 학습자를 대상으로, Java를 사용하여 프로그램을 작성하는 데 필요한 기본 개념과 코드 작성 방식을 학습하기 위한 자료를 제공합니다.
+이 저장소는 C 언어를 비롯한 다른 프로그래밍 언어로 기초적인 코딩 경험을 쌓은 학습자가 Java로 프로그램을 작성하는 데 필요한 기본 개념과 코드 작성 방식을 익히기 위한 학습 자료입니다.
 
-이 저장소에서는 객체지향 개념을 기반으로 한 Java 프로그래밍을 학습의 중심으로 삼지 않습니다.
+이 자료는 객체지향 설계 자체를 학습의 중심으로 삼지는 않습니다.  
+대신 C 언어의 개념 위에서 Java가 제공하는 더 안전하고 편리한 표현 방식, 메모리 관리, 문자열 처리, 표준 라이브러리, 클래스 기반 코드 구성을 단계적으로 익히는 데 초점을 둡니다.
 
-Java는 C 언어에 비해 개발자가 보다 편리하게 코드를 작성할 수 있도록 설계된 언어로, 메모리 관리와 문자열 처리 그리고 다양한 표준 라이브러리 제공을 통해 개발자가 직접 구현해야 했던 많은 기능을 언어와 실행 환경이 추상화하여 제공하고 있습니다.
+목표는 Java 문법을 단순히 외우는 것이 아니라, 문제를 읽고 적절한 자료형과 흐름으로 나누어 안정적으로 구현하는 감각을 기르는 것입니다.  
+객체지향 개념은 필요한 만큼만 사용하며, 불필요한 추상화나 과도한 객체 모델링은 의도적으로 배제합니다.
 
-이 저장소는 이러한 특성을 바탕으로 보다 편리하게, 안전한 방식으로 프로그램을 작성하는 과정을 통해 Java가 제공하는 기본적인 기능과 코드 작성 방식에 익숙해지는 것을 목표로 합니다.
-
-이를 위해 클래스는 Java 언어에서 요구되는 최소한의 코드 단위로만 사용되며, 불필요한 추상화나 객체 모델링은 의도적으로 배제됩니다.
-
-즉, 이 저장소는 객체지향 개념을 본격적으로 다루기 이전에 Java를 안정적이고 효율적으로 사용하기 위한 기초를 다지는 데 초점을 둡니다.
-
+> [!NOTE]
 > C 언어의 개념 위에서 더 안전하고 더 편리한 언어로서의 Java를 이해하자
 
-## 목차 및 노트
+## 자료 구성
 
-각 장별 학습 노트는 [`notes/`](./notes) 디렉토리에, 예시 코드는 [`example-code/`](./example-code) 디렉토리에 정리되어 있습니다.
+각 장별 학습 노트는 [`notes/`](./notes) 디렉터리에, 예시 코드는 [`example-code/`](./example-code) 디렉터리에 정리되어 있습니다.
 
-| 번호 | 주제                         | 노트                                                | 예시 코드    |
-| :--  | :--------------------------- | :-------------------------------------------------- | :----------: |
-| 01   | 프로그래밍 언어의 분류       | [01-programming-language-classification]            |              |
-| 02   | 값과 참조                    | [02-values-and-references]                          | [example-02] |
-| 03   | 언어 차원의 표현력 확장      | [03-enhancing-expressiveness-at-the-language-level] | [example-03] |
-| 04   | 언어 차원의 데이터 관리      | [04-data-management-at-the-language-level]          | [example-04] |
-| 05   | 언어 차원의 문법적 편의 기능 | [05-syntactic-convenience-at-the-language-level]    | [example-05] |
-| 06   | 사용자 정의 자료형           | [06-user-defined-types]                             | [example-06] |
+| 번호 | 주제                          | 노트                                               | 예시 코드    |
+| :--  | :---------------------------- | :------------------------------------------------- | :----------: |
+| 01   | 언어 분류와 설계 관점         | [01-language-classification-and-design-perspectives] |      -       |
+| 02   | 값과 참조                     | [02-values-and-references]                         | [example-02] |
+| 03   | 표현력과 메서드 설계          | [03-expressiveness-and-method-design]              | [example-03] |
+| 04   | 컬렉션을 활용한 데이터 관리   | [04-managing-data-with-collections]                | [example-04] |
+| 05   | 문법과 언어 사용성            | [05-syntax-and-language-ergonomics]                | [example-05] |
+| 06   | 사용자 정의 자료형            | [06-user-defined-types]                            | [example-06] |
 
+## 실습
 
-## 실습(Lab)
-
-실습에 대한 자세한 안내는 [`lab/`](./lab) 디렉토리의 [`README.md`](./lab/README.md)에 정리되어 있습니다.
+실습은 개념을 코드로 옮기는 훈련을 위해 구성되어 있습니다.  
+환경 설정과 진행 방법은 [`lab/README.md`](./lab/README.md)에 정리되어 있으며, Java 17 기준으로 진행합니다.
 
 | 번호 | 제목                   | 경로     |
 | :--  | :--------------------- | :------: |
@@ -41,13 +38,17 @@ Java는 C 언어에 비해 개발자가 보다 편리하게 코드를 작성할 
 |  05  | Data Structures        | [lab-05] |
 
 
-## 학습 방법 제안
+## 학습 방법
 
-다음과 같은 순서로 학습하는 것을 권장합니다.
+다음 순서로 학습하는 것을 권장합니다.
 
 1. `notes/`의 학습 슬라이드를 통해 개념을 이해한다.
 2. `example-code/`의 예제를 통해 해당 개념이 코드로 어떻게 나타나는지 확인한다.
 3. `lab/`의 실습을 통해 직접 코드를 작성하며 적용해본다.
+
+실습을 진행할 때는 단순히 동작하는 코드를 만드는 데서 그치지 않고, [코딩 표준](./java-coding-standard.md)을 바탕으로 일관된 이름, 명확한 흐름, 읽기 쉬운 구조를 갖춘 코드를 작성하는 훈련을 함께 한다.
+
+강의 노트의 예시는 Java 문법과 개념을 설명하기 위해 일반적인 Java 관례를 기준으로 작성되어 있습니다. 일반적인 Java 관례와 다른 고유의 코딩 표준은 강의 노트 예시에 일괄 반영하지 않았습니다.
 
 ## 부정확한 내용에 대한 기여
 
@@ -58,16 +59,16 @@ Java는 C 언어에 비해 개발자가 보다 편리하게 코드를 작성할 
 
 ## 문의
 
-이 저장소를 통해 공부하시다가 내용, 실습, 설명 등에 대해 궁금한 점이 생기면 언제든지 potterLim0808@gmail.com 으로 문의 주시면 성실히 답변드리겠습니다.
+이 저장소를 통해 공부하시다가 내용, 실습, 설명 등에 대해 궁금한 점이 생기면 언제든지 potterLim0808@gmail.com으로 문의 주시면 성실히 답변드리겠습니다.
 
-> 최종 수정일: 2026-01-08
+> 최종 수정일: 2026. 05. 10.
 
 
-[01-programming-language-classification]: ./notes/01-programming-language-classification.pdf
+[01-language-classification-and-design-perspectives]: ./notes/01-language-classification-and-design-perspectives.pdf
 [02-values-and-references]: ./notes/02-values-and-references.pdf
-[03-enhancing-expressiveness-at-the-language-level]: ./notes/03-enhancing-expressiveness-at-the-language-level.pdf
-[04-data-management-at-the-language-level]: ./notes/04-data-management-at-the-language-level.pdf
-[05-syntactic-convenience-at-the-language-level]: ./notes/05-syntactic-convenience-at-the-language-level.pdf
+[03-expressiveness-and-method-design]: ./notes/03-expressiveness-and-method-design.pdf
+[04-managing-data-with-collections]: ./notes/04-managing-data-with-collections.pdf
+[05-syntax-and-language-ergonomics]: ./notes/05-syntax-and-language-ergonomics.pdf
 [06-user-defined-types]: ./notes/06-user-defined-types.pdf
 
 [example-02]: ./example-code/src/main/java/com/example/valuesandreferences/
