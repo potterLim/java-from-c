@@ -67,11 +67,11 @@ package com.awesome.shop.payment;
 package com.awesome.shop.delivery.tracking;
 ```
 
-### 2.3. import 규칙
+### 2.3. `import` 규칙
 
-- 와일드카드(`*`) import는 금지한다.
-- 필요한 클래스만 명시적으로 import한다.
-- 사용하지 않는 import는 남기지 않는다.
+- 와일드카드(`*`) `import`는 금지한다.
+- 필요한 클래스만 명시적으로 `import`한다.
+- 사용하지 않는 `import`는 남기지 않는다.
 - static import는 테스트 코드나 가독성이 분명히 좋아지는 경우에만 제한적으로 사용한다.
 
 좋지 않은 예:
@@ -110,10 +110,10 @@ OrderProcessor.java
 
 ### 3.1. 클래스, 인터페이스, 열거형 이름 규칙
 
-- 클래스는 PascalCase를 사용한다.
+- 클래스는 `PascalCase`를 사용한다.
 - 클래스 이름은 명사 또는 명사구로 작성한다.
-- 인터페이스는 PascalCase를 사용하며, 이름 앞에 `I` 접두어를 사용한다.
-- 열거형은 PascalCase를 사용하며, 이름 앞에 `E` 접두어를 사용한다.
+- 인터페이스는 `PascalCase`를 사용하며, 이름 앞에 `I` 접두어를 사용한다.
+- 열거형은 `PascalCase`를 사용하며, 이름 앞에 `E` 접두어를 사용한다.
 - 비트 플래그나 권한 조합처럼 플래그 성격의 열거형에는 `Flags` 접미사를 붙인다.
 - 열거형 멤버는 모두 대문자와 밑줄을 사용한다.
 
@@ -155,7 +155,7 @@ public enum EPermissionFlags {
 
 ### 3.2. 메서드 이름 규칙
 
-- 메서드 이름은 camelCase를 사용한다.
+- 메서드 이름은 `camelCase`를 사용한다.
 - 메서드 이름은 반드시 동사 또는 동사구로 시작한다.
 - 가능하면 `동사 + 목적어` 형태로 작성한다.
 - 반환값이 있는 메서드는 무엇을 반환하는지가 이름에 드러나야 한다.
@@ -186,7 +186,7 @@ public BigDecimal calculateOrderTotalRecursive(OrderNode orderNode);
 
 ### 3.3. 변수 이름 규칙
 
-- 변수 이름은 camelCase를 사용한다.
+- 변수 이름은 `camelCase`를 사용한다.
 - 변수 이름은 명사 또는 명사구를 사용한다.
 - 값의 의미, 역할, 상태, 개수, 위치가 드러나야 한다.
 - 의미 없는 축약어, 임의의 약어, 단일 문자 변수 이름은 사용하지 않는다.
@@ -220,9 +220,9 @@ boolean hasDeliveryAddress;
 ### 3.4. 멤버 변수 이름 규칙
 
 - 인스턴스 멤버 변수는 `m` 접두어를 사용한다.
-- static 멤버 변수는 `s` 접두어를 사용한다.
+- `static` 멤버 변수는 `s` 접두어를 사용한다.
 - 접두어 뒤에는 멤버 변수의 원래 이름을 대문자로 시작하여 이어 붙인다.
-- boolean 멤버 변수는 `mIs`, `mHas`, `mCan`, `mShould` 형태를 우선 사용한다.
+- `boolean` 멤버 변수는 `mIs`, `mHas`, `mCan`, `mShould` 형태를 우선 사용한다.
 - 상수는 `s` 접두어를 사용하지 않고, 3.5의 상수 이름 규칙을 따른다.
 
 좋은 예:
@@ -292,12 +292,12 @@ public static final String DEFAULT_TIME_ZONE = "Asia/Seoul";
 클래스 내부 구성은 다음 순서를 따른다.
 
 1. 상수
-2. static 멤버 변수
+2. `static` 멤버 변수
 3. 인스턴스 멤버 변수
 4. 생성자
-5. public 메서드
-6. protected 메서드
-7. private 메서드
+5. `public` 메서드
+6. `protected` 메서드
+7. `private` 메서드
 
 추가 원칙은 다음과 같다.
 
@@ -343,11 +343,12 @@ public class OrderService {
 
 ## 5. 접근 제어 및 캡슐화
 
+### 5.1. 멤버 접근 제어 규칙
+
 - `public` 인스턴스 멤버 변수와 변경 가능한 `public static` 멤버 변수는 금지한다.
 - 상수를 제외한 모든 멤버 변수는 원칙적으로 `private`으로 선언한다.
 - 변경되지 않는 멤버 변수는 가능한 한 `final`로 선언한다.
-- 외부 노출이 필요하더라도 관성적으로 `getter` / `setter`를 만들지 않는다.
-- 특히 `setter` 남용을 피한다.
+- 외부 노출이 필요하더라도 관성적으로 getter / setter를 만들지 않는다.
 - 단순 값 변경보다 의미 있는 상태 변경을 표현하는 메서드를 우선한다.
 
 좋지 않은 예:
@@ -362,8 +363,10 @@ public class UserProfile {
 }
 ```
 
-- `getter`는 외부 읽기 접근이 필요할 때만 제공한다.
-- `setter`는 외부에서 상태 변경 책임을 가져야 하는 경우에만 제한적으로 제공한다.
+### 5.2. getter와 setter 사용 규칙
+
+- getter는 외부 읽기 접근이 필요할 때만 제공한다.
+- setter는 외부에서 상태 변경 책임을 가져야 하는 경우에만 제한적으로 제공한다.
 
 좋은 예:
 
@@ -425,7 +428,7 @@ if (order.hasDiscountCoupon()) {
 
 ```java
 public User search(String userId);
-public List<User> search(String keyword);
+public List<User> search(SearchKeyword keyword);
 ```
 
 좋은 예:
@@ -438,9 +441,9 @@ public List<User> searchByKeyword(SearchKeyword searchKeyword);
 ### 6.3. 입력 검증 규칙
 
 - 외부 입력은 시스템 경계에서 검증한다.
-- 검증 실패 시 가능한 빨리 반환한다.
+- 검증 실패는 시스템 경계에서 즉시 처리한다.
 - 내부 메서드는 이미 검증된 값을 받는다고 가정한다.
-- 필수 매개 변수가 `null`이면 즉시 반환한다.
+- 내부 메서드의 사전 조건이 깨지면 즉시 실패가 드러나게 한다.
 
 좋은 예:
 
@@ -591,7 +594,7 @@ public List<Order> searchOrders(OrderSearchCriteria criteria) {
 }
 ```
 
-#### boolean 매개 변수 지양 예
+#### `boolean` 매개 변수 지양 예
 
 좋지 않은 예:
 
@@ -610,7 +613,7 @@ public enum ESaveMode {
 public void saveUser(User user, ESaveMode saveMode);
 ```
 
-### 6.5. @Override 사용 규칙
+### 6.5. `@Override` 사용 규칙
 
 - 메서드를 오버라이딩할 때는 항상 `@Override`를 명시한다.
 - 인터페이스 메서드를 구현할 때도 `@Override`를 명시한다.
@@ -624,28 +627,7 @@ public User findUserById(UserId userId) {
 
 ## 7. 제어문 규칙
 
-### 7.1. 중괄호 사용 규칙
-
-- 모든 제어문에는 중괄호를 반드시 사용한다.
-- 단일 실행문이어도 중괄호를 생략하지 않는다.
-- 빈 블록을 만들지 않는다.
-
-좋지 않은 예:
-
-```java
-if (isValidRequest)
-    proceed();
-```
-
-좋은 예:
-
-```java
-if (isValidRequest) {
-    proceed();
-}
-```
-
-### 7.2. 빠른 반환 규칙
+### 7.1. 빠른 반환 규칙
 
 - 실패 조건이나 중단 조건은 앞에서 처리한다.
 - 정상 흐름이 깊은 중첩 안에 들어가지 않도록 한다.
@@ -664,7 +646,7 @@ public Receipt approvePayment(Order order) {
 }
 ```
 
-### 7.3. switch 문 규칙
+### 7.2. `switch` 문 규칙
 
 - `switch` 문에는 언제나 `default` 케이스를 넣는다.
 - `switch` 문에서 `default` 케이스가 절대 실행될 일이 없는 경우, `default` 안에 `assert (false)`를 추가한다.
@@ -708,7 +690,7 @@ public void handleOrderStatus(EOrderStatus orderStatus) {
 }
 ```
 
-## 8. assert 사용 규칙
+## 8. `assert` 사용 규칙
 
 - `assert`는 코드가 전제로 삼는 내부 불변식과 사전 조건을 확인할 때 사용한다.
 - 특정 조건이 반드시 충족되어야 한다고 가정한 지점에는 `assert`를 둔다.
@@ -728,7 +710,7 @@ assert (denominator != 0) : "denominator must not be zero";
 assert (orderStatus != null) : "orderStatus must already be validated";
 ```
 
-## 9. null 처리 규칙
+## 9. `null` 처리 규칙
 
 - 매개 변수로 `null`을 전달하는 것은 지양한다.
 - `null`을 허용해야 하는 경우 매개 변수 이름 끝에 `OrNull`을 붙인다.
@@ -755,16 +737,11 @@ public List<Order> findOrdersOrNull(UserId userId);
 public String getDisplayNameOrNull();
 
 public List<Order> findOrdersByUserId(UserId userId) {
-    List<Order> orders = mOrderRepository.findByUserId(userId);
-    if (orders.isEmpty()) {
-        return Collections.emptyList();
-    }
-
-    return orders;
+    return mOrderRepository.findByUserId(userId);
 }
 ```
 
-## 10. var 사용 규칙
+## 10. `var` 사용 규칙
 
 - `var`는 자료형이 우변에서 명확히 드러나는 경우에만 제한적으로 사용한다.
 - 메서드 반환값처럼 자료형이 이름만으로 분명하지 않은 경우에는 사용하지 않는다.
@@ -794,13 +771,35 @@ List<Order> orders = mOrderRepository.findAll();
 
 ## 11. 포맷팅 규칙
 
-### 11.1. 들여쓰기 및 중괄호 규칙
+### 11.1. 들여쓰기 규칙
 
 - IntelliJ 기본 포맷을 따른다.
 - 들여쓰기는 공백 4칸을 사용한다.
+
+### 11.2. 중괄호 사용 규칙
+
 - 여는 중괄호는 같은 줄에 둔다.
 - 닫는 중괄호는 새로운 줄에 둔다.
-- 한 줄은 가능하면 120자를 넘기지 않는다.
+- 모든 제어문에는 중괄호를 반드시 사용한다.
+- 단일 실행문이어도 중괄호를 생략하지 않는다.
+- 빈 블록을 만들지 않는다.
+
+좋지 않은 예:
+
+```java
+if (isValidRequest)
+    proceed();
+```
+
+좋은 예:
+
+```java
+if (isValidRequest) {
+    proceed();
+}
+```
+
+중괄호 위치 예:
 
 ```java
 public void processOrder(Order order) {
@@ -822,7 +821,7 @@ if (condition) {
 }
 ```
 
-### 11.2. 수정자 순서 규칙
+### 11.3. 수정자 순서 규칙
 
 - 접근 제어자는 다른 수정자보다 앞에 작성한다.
 - `static`은 `final`보다 앞에 작성한다.
@@ -845,7 +844,7 @@ public static void doSomething() {
 private static final int RETRY_COUNT = 3;
 ```
 
-### 11.3. 선언 규칙
+### 11.4. 선언 규칙
 
 - 한 줄에 변수 하나만 선언한다.
 - 배열 선언은 자료형 쪽에 대괄호를 붙인다.
@@ -866,7 +865,7 @@ int depth = 0;
 String[] fileNames;
 ```
 
-### 11.4. 리터럴 표기 규칙
+### 11.5. 리터럴 표기 규칙
 
 - `float` 리터럴에는 반드시 `f`를 붙인다.
 - `long` 리터럴에는 반드시 대문자 `L`을 사용한다.
