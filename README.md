@@ -80,4 +80,3 @@
 [lab-03]: ./lab/03-todo-analyzer/SPEC.md
 [lab-04]: ./lab/04-space-convoy/SPEC.md
 [lab-05]: ./lab/05-linear-data-structures/SPEC.md
-

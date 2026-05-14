@@ -78,4 +78,3 @@ ExpressionEvaluator.evaluateOrNull("1 +");                // null
 ExpressionEvaluator.evaluateOrNull("1 2 + 3");            // null
 ExpressionEvaluator.evaluateOrNull("2 * * 3");            // null
 ```
-

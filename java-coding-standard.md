@@ -1016,4 +1016,3 @@ if (isDuplicatePaymentAttempt(paymentAttempt)) {
     return PaymentResult.duplicateRequest();
 }
 ```
-

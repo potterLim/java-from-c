@@ -214,4 +214,3 @@ IntelliJ 오른쪽 Gradle 창에서 다음 버튼 클릭:
 - `Sync All Gradle Projects` (새로고침 아이콘)
 
 정상이라면 Gradle 창에 모든 실습 모듈이 표시된다.
-

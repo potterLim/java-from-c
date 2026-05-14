@@ -844,4 +844,3 @@ empty = list.isEmpty();             // false
 list.clear();                       // 상태: []
 empty = list.isEmpty();             // true
 ```
-
