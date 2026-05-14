@@ -1,6 +1,6 @@
 package com.example.spaceconvoy;
 
-public class Ship {
+public final class Ship {
     private static final double LIGHT_MULTIPLIER = 1.25;
     private static final double MEDIUM_MULTIPLIER = 1.00;
     private static final double HEAVY_MULTIPLIER = 0.85;
@@ -8,88 +8,92 @@ public class Ship {
 
     private static final int MINIMUM_DAMAGE = 1;
 
-    private final String name;
-    private final HullGrade hullGrade;
-    private int hull;
-    private final int laserDamage;
-    private final int shield;
-    private final int repairAmount;
+    private final String mName;
+    private final EHullGrade mHullGrade;
+    private int mHull;
+    private final int mLaserDamage;
+    private final int mShield;
+    private final int mRepairAmount;
 
-    public Ship(String name, HullGrade hullGrade, int hull, int laserDamage, int shield, int repairAmount) {
-        this.name = name;
-        this.hullGrade = hullGrade;
-        this.hull = hull;
-        this.laserDamage = laserDamage;
-        this.shield = shield;
-        this.repairAmount = repairAmount;
+    public Ship(String name, EHullGrade hullGrade, int hull, int laserDamage, int shield, int repairAmount) {
+        mName = name;
+        mHullGrade = hullGrade;
+        mHull = hull;
+        mLaserDamage = laserDamage;
+        mShield = shield;
+        mRepairAmount = repairAmount;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
-    public HullGrade getHullGrade() {
-        return hullGrade;
+    public EHullGrade getHullGrade() {
+        return mHullGrade;
     }
 
     public int getHull() {
-        return hull;
+        return mHull;
     }
 
     public int getLaserDamage() {
-        return laserDamage;
+        return mLaserDamage;
     }
 
     public int getShield() {
-        return shield;
+        return mShield;
     }
 
     public int getRepairAmount() {
-        return repairAmount;
+        return mRepairAmount;
     }
 
     public void applyHullChange(int delta) {
-        hull += delta;
+        mHull += delta;
 
-        if (hull < 0) {
-            hull = 0;
+        if (mHull < 0) {
+            mHull = 0;
         }
     }
 
     public void fireLaser(Ship otherShip) {
-        int damageAfterShield = laserDamage - otherShip.shield;
+        int finalDamage = calculateLaserDamageTo(otherShip);
+        otherShip.applyHullChange(-finalDamage);
+    }
+
+    public void repair() {
+        applyHullChange(mRepairAmount);
+    }
+
+    int calculateLaserDamageTo(Ship otherShip) {
+        int damageAfterShield = mLaserDamage - otherShip.mShield;
         if (damageAfterShield <= 0) {
-            return;
+            return 0;
         }
 
-        double hullMultiplier;
-        switch (otherShip.hullGrade) {
-            case LIGHT:
-                hullMultiplier = LIGHT_MULTIPLIER;
-                break;
-            case MEDIUM:
-                hullMultiplier = MEDIUM_MULTIPLIER;
-                break;
-            case HEAVY:
-                hullMultiplier = HEAVY_MULTIPLIER;
-                break;
-            case ARMORED:
-                hullMultiplier = ARMORED_MULTIPLIER;
-                break;
-            default:
-                hullMultiplier = MEDIUM_MULTIPLIER;
-                break;
-        }
+        double hullMultiplier = getDamageMultiplier(otherShip.mHullGrade);
 
         int finalDamage = (int) (damageAfterShield * hullMultiplier);
         if (finalDamage < MINIMUM_DAMAGE) {
             finalDamage = MINIMUM_DAMAGE;
         }
 
-        otherShip.applyHullChange(-finalDamage);
+        return finalDamage;
     }
 
-    public void repair() {
-        applyHullChange(repairAmount);
+    private static double getDamageMultiplier(EHullGrade hullGrade) {
+        switch (hullGrade) {
+            case LIGHT:
+                return LIGHT_MULTIPLIER;
+            case MEDIUM:
+                return MEDIUM_MULTIPLIER;
+            case HEAVY:
+                return HEAVY_MULTIPLIER;
+            case ARMORED:
+                return ARMORED_MULTIPLIER;
+            default:
+                assert (false) : "Unexpected hull grade: " + hullGrade;
+                return MEDIUM_MULTIPLIER;
+        }
     }
 }

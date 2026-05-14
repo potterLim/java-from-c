@@ -1,9 +1,12 @@
 package com.example.bignumber;
 
-public class BigNumberCalculator {
-    public static String addOrNull(String num1, String num2) {
-        String leftNormalized = normalizeSignedIntegerOrNull(num1);
-        String rightNormalized = normalizeSignedIntegerOrNull(num2);
+public final class BigNumberCalculator {
+    private BigNumberCalculator() {
+    }
+
+    public static String addOrNull(String leftNumberOrNull, String rightNumberOrNull) {
+        String leftNormalized = normalizeSignedIntegerOrNull(leftNumberOrNull);
+        String rightNormalized = normalizeSignedIntegerOrNull(rightNumberOrNull);
 
         if (leftNormalized == null || rightNormalized == null) {
             return null;
@@ -61,9 +64,9 @@ public class BigNumberCalculator {
         return diffAbsDigits;
     }
 
-    public static String subtractOrNull(String num1, String num2) {
-        String leftNormalized = normalizeSignedIntegerOrNull(num1);
-        String rightNormalized = normalizeSignedIntegerOrNull(num2);
+    public static String subtractOrNull(String leftNumberOrNull, String rightNumberOrNull) {
+        String leftNormalized = normalizeSignedIntegerOrNull(leftNumberOrNull);
+        String rightNormalized = normalizeSignedIntegerOrNull(rightNumberOrNull);
 
         if (leftNormalized == null || rightNormalized == null) {
             return null;
@@ -91,20 +94,20 @@ public class BigNumberCalculator {
         return addOrNull(leftNormalized, invertedRight);
     }
 
-    private static boolean isValidSignedInteger(String num) {
-        if (num == null || num.length() == 0) {
+    private static boolean isValidSignedInteger(String numberOrNull) {
+        if (numberOrNull == null || numberOrNull.length() == 0) {
             return false;
         }
 
-        if (num.length() == 1 && num.charAt(0) == '-') {
+        if (numberOrNull.length() == 1 && numberOrNull.charAt(0) == '-') {
             return false;
         }
 
-        for (int i = 0; i < num.length(); ++i) {
-            char c = num.charAt(i);
+        for (int i = 0; i < numberOrNull.length(); ++i) {
+            char currentChar = numberOrNull.charAt(i);
 
-            if (c < '0' || c > '9') {
-                if (i == 0 && c == '-') {
+            if (currentChar < '0' || currentChar > '9') {
+                if (i == 0 && currentChar == '-') {
                     continue;
                 }
 
@@ -115,54 +118,54 @@ public class BigNumberCalculator {
         return true;
     }
 
-    private static String normalizeSignedIntegerOrNull(String num) {
-        if (!isValidSignedInteger(num)) {
+    private static String normalizeSignedIntegerOrNull(String numberOrNull) {
+        if (!isValidSignedInteger(numberOrNull)) {
             return null;
         }
 
         boolean isNegative = false;
         int firstDigitIndex = 0;
 
-        if (num.charAt(0) == '-') {
+        if (numberOrNull.charAt(0) == '-') {
             isNegative = true;
             firstDigitIndex = 1;
         }
 
-        while (firstDigitIndex < num.length() && num.charAt(firstDigitIndex) == '0') {
-            firstDigitIndex++;
+        while (firstDigitIndex < numberOrNull.length() && numberOrNull.charAt(firstDigitIndex) == '0') {
+            ++firstDigitIndex;
         }
 
-        if (firstDigitIndex == num.length()) {
+        if (firstDigitIndex == numberOrNull.length()) {
             return "0";
         }
 
         if (isNegative) {
-            return "-" + num.substring(firstDigitIndex);
+            return "-" + numberOrNull.substring(firstDigitIndex);
         }
 
-        return num.substring(firstDigitIndex);
+        return numberOrNull.substring(firstDigitIndex);
     }
 
-    private static String extractAbsDigits(String signedNum) {
-        if (signedNum.charAt(0) == '-') {
-            return signedNum.substring(1);
+    private static String extractAbsDigits(String signedNumber) {
+        if (signedNumber.charAt(0) == '-') {
+            return signedNumber.substring(1);
         }
 
-        return signedNum;
+        return signedNumber;
     }
 
-    private static int compareAbsDigits(String digits1, String digits2) {
-        if (digits1.length() > digits2.length()) {
+    private static int compareAbsDigits(String leftDigits, String rightDigits) {
+        if (leftDigits.length() > rightDigits.length()) {
             return 1;
         }
 
-        if (digits1.length() < digits2.length()) {
+        if (leftDigits.length() < rightDigits.length()) {
             return -1;
         }
 
-        for (int i = 0; i < digits1.length(); ++i) {
-            char leftDigit = digits1.charAt(i);
-            char rightDigit = digits2.charAt(i);
+        for (int i = 0; i < leftDigits.length(); ++i) {
+            char leftDigit = leftDigits.charAt(i);
+            char rightDigit = rightDigits.charAt(i);
 
             if (leftDigit > rightDigit) {
                 return 1;
@@ -176,85 +179,72 @@ public class BigNumberCalculator {
         return 0;
     }
 
-    private static String addAbsDigits(String digits1, String digits2) {
-        String longerDigits;
-        String shorterDigits;
-        int longerLength;
-        int shorterLength;
+    private static String addAbsDigits(String leftDigits, String rightDigits) {
+        int leftIndex = leftDigits.length() - 1;
+        int rightIndex = rightDigits.length() - 1;
+        int carry = 0;
 
-        if (digits1.length() > digits2.length()) {
-            longerDigits = digits1;
-            shorterDigits = digits2;
-        } else {
-            longerDigits = digits2;
-            shorterDigits = digits1;
-        }
+        StringBuilder reversedResultDigits = new StringBuilder(Math.max(leftDigits.length(), rightDigits.length()) + 1);
 
-        longerLength = longerDigits.length();
-        shorterLength = shorterDigits.length();
-
-        StringBuilder resultDigits = new StringBuilder(longerLength + 1);
-        for (int i = 0; i < longerLength + 1; ++i) {
-            resultDigits.append('0');
-        }
-
-        int alignmentOffset = longerLength - shorterLength;
-        for (int i = longerLength; i >= 1; --i) {
-            if (i - alignmentOffset - 1 >= 0) {
-                resultDigits.setCharAt(i, (char) (longerDigits.charAt(i - 1) + shorterDigits.charAt(i - alignmentOffset - 1) - '0'));
-            } else {
-                resultDigits.setCharAt(i, longerDigits.charAt(i - 1));
+        while (leftIndex >= 0 || rightIndex >= 0 || carry > 0) {
+            int leftDigit = 0;
+            if (leftIndex >= 0) {
+                leftDigit = leftDigits.charAt(leftIndex) - '0';
             }
-        }
 
-        for (int i = longerLength; i >= 1; --i) {
-            if (resultDigits.charAt(i) > '9') {
-                resultDigits.setCharAt(i, (char) (resultDigits.charAt(i) - 10));
-                resultDigits.setCharAt(i - 1, (char) (resultDigits.charAt(i - 1) + 1));
+            int rightDigit = 0;
+            if (rightIndex >= 0) {
+                rightDigit = rightDigits.charAt(rightIndex) - '0';
             }
+
+            int digitSum = leftDigit + rightDigit + carry;
+            reversedResultDigits.append((char) ('0' + (digitSum % 10)));
+            carry = digitSum / 10;
+
+            --leftIndex;
+            --rightIndex;
         }
 
-        if (resultDigits.charAt(0) == '0') {
-            resultDigits.deleteCharAt(0);
-        }
-
-        return resultDigits.toString();
+        return reversedResultDigits.reverse().toString();
     }
 
-    private static String subtractAbsDigits(String digits1, String digits2) {
-        if (compareAbsDigits(digits1, digits2) < 0) {
-            return subtractAbsDigits(digits2, digits1);
+    private static String subtractAbsDigits(String leftDigits, String rightDigits) {
+        if (compareAbsDigits(leftDigits, rightDigits) < 0) {
+            return subtractAbsDigits(rightDigits, leftDigits);
         }
 
-        int longerLength = digits1.length();
-        int shorterLength = digits2.length();
+        int leftIndex = leftDigits.length() - 1;
+        int rightIndex = rightDigits.length() - 1;
+        int borrow = 0;
 
-        StringBuilder resultDigits = new StringBuilder(longerLength);
-        for (int i = 0; i < longerLength; ++i) {
-            resultDigits.append('0');
-        }
+        StringBuilder reversedResultDigits = new StringBuilder(leftDigits.length());
 
-        int alignmentOffset = longerLength - shorterLength;
+        while (leftIndex >= 0) {
+            int leftDigit = (leftDigits.charAt(leftIndex) - '0') - borrow;
 
-        for (int i = longerLength - 1; i >= 0; --i) {
-            if (i - alignmentOffset >= 0) {
-                resultDigits.setCharAt(i, (char) (digits1.charAt(i) - digits2.charAt(i - alignmentOffset) + '0'));
+            int rightDigit = 0;
+            if (rightIndex >= 0) {
+                rightDigit = rightDigits.charAt(rightIndex) - '0';
+            }
+
+            if (leftDigit < rightDigit) {
+                leftDigit += 10;
+                borrow = 1;
             } else {
-                resultDigits.setCharAt(i, digits1.charAt(i));
+                borrow = 0;
             }
+
+            int digitDifference = leftDigit - rightDigit;
+            reversedResultDigits.append((char) ('0' + digitDifference));
+
+            --leftIndex;
+            --rightIndex;
         }
 
-        for (int i = longerLength - 1; i >= 1; --i) {
-            if (resultDigits.charAt(i) < '0') {
-                resultDigits.setCharAt(i, (char) (resultDigits.charAt(i) + 10));
-                resultDigits.setCharAt(i - 1, (char) (resultDigits.charAt(i - 1) - 1));
-            }
+        while (reversedResultDigits.length() > 1 && reversedResultDigits.charAt(reversedResultDigits.length() - 1) == '0') {
+            reversedResultDigits.deleteCharAt(reversedResultDigits.length() - 1);
         }
 
-        while (resultDigits.length() > 1 && resultDigits.charAt(0) == '0') {
-            resultDigits.deleteCharAt(0);
-        }
-
-        return resultDigits.toString();
+        return reversedResultDigits.reverse().toString();
     }
 }

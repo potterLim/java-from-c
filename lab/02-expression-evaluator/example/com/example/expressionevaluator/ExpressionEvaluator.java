@@ -1,10 +1,15 @@
 package com.example.expressionevaluator;
 
-public class ExpressionEvaluator {
-    private static final int INVALID_OPERAND = Integer.MIN_VALUE;
+public final class ExpressionEvaluator {
+    private ExpressionEvaluator() {
+    }
 
-    public static String evaluateOrNull(String expression) {
-        assert (expression != null);
+    public static String evaluateOrNull(String expressionOrNull) {
+        if (expressionOrNull == null) {
+            return null;
+        }
+
+        String expression = expressionOrNull;
 
         int expressionLength = expression.length();
 
@@ -44,31 +49,56 @@ public class ExpressionEvaluator {
                     }
 
                     sign = -1;
-                    index++;
+                    ++index;
                 }
 
-                int operandValue = parseOperandOrNull(expression, expressionLength, index);
-                if (operandValue == INVALID_OPERAND) {
+                int digitCount = 0;
+                long operandAbsValue = 0;
+                boolean hasLeadingZero = false;
+
+                while (true) {
+                    if (index >= expressionLength) {
+                        break;
+                    }
+
+                    current = expression.charAt(index);
+
+                    if (!isDigit(current)) {
+                        break;
+                    }
+
+                    if (digitCount == 0) {
+                        if (current == '0') {
+                            hasLeadingZero = true;
+                        }
+                    } else {
+                        if (hasLeadingZero) {
+                            return null;
+                        }
+                    }
+
+                    operandAbsValue = (operandAbsValue * 10) + (current - '0');
+                    ++digitCount;
+                    ++index;
+                }
+
+                if (digitCount == 0) {
                     return null;
                 }
 
-                if (sign == -1 && operandValue == 0) {
+                if (sign == -1 && operandAbsValue == 0) {
                     return null;
                 }
 
-                int nextIndex = parseOperandNextIndex(expression, expressionLength, index);
-                if (nextIndex < 0) {
-                    return null;
-                }
-
-                index = nextIndex;
-
+                int operandValue;
                 if (sign == -1) {
-                    operandValue = -operandValue;
+                    operandValue = (int) -operandAbsValue;
+                } else {
+                    operandValue = (int) operandAbsValue;
                 }
 
                 operands[operandCount] = operandValue;
-                operandCount++;
+                ++operandCount;
 
                 isExpectingOperand = false;
             } else {
@@ -77,9 +107,9 @@ public class ExpressionEvaluator {
                 }
 
                 operators[operatorCount] = current;
-                operatorCount++;
+                ++operatorCount;
 
-                index++;
+                ++index;
                 isExpectingOperand = true;
             }
         }
@@ -99,9 +129,9 @@ public class ExpressionEvaluator {
         int reducedOperatorCount = 0;
 
         reducedOperands[reducedOperandCount] = operands[0];
-        reducedOperandCount++;
+        ++reducedOperandCount;
 
-        for (int i = 0; i < operatorCount; i++) {
+        for (int i = 0; i < operatorCount; ++i) {
             char operator = operators[i];
             int rightOperand = operands[i + 1];
 
@@ -123,16 +153,16 @@ public class ExpressionEvaluator {
                 reducedOperands[reducedOperandCount - 1] = calculationResult;
             } else {
                 reducedOperators[reducedOperatorCount] = operator;
-                reducedOperatorCount++;
+                ++reducedOperatorCount;
 
                 reducedOperands[reducedOperandCount] = rightOperand;
-                reducedOperandCount++;
+                ++reducedOperandCount;
             }
         }
 
         int result = reducedOperands[0];
 
-        for (int i = 0; i < reducedOperatorCount; i++) {
+        for (int i = 0; i < reducedOperatorCount; ++i) {
             char operator = reducedOperators[i];
             int rightOperand = reducedOperands[i + 1];
 
@@ -146,127 +176,21 @@ public class ExpressionEvaluator {
         return Integer.toString(result);
     }
 
-    private static int parseOperandOrNull(String expression, int length, int startIndex) {
-        int index = startIndex;
-
-        if (index >= length) {
-            return INVALID_OPERAND;
-        }
-
-        char firstChar = expression.charAt(index);
-        if (!isDigit(firstChar)) {
-            return INVALID_OPERAND;
-        }
-
-        int digitCount = 0;
-        int value = 0;
-        boolean hasLeadingZero = false;
-
-        while (true) {
-            if (index >= length) {
-                break;
-            }
-
-            char currentChar = expression.charAt(index);
-
-            if (Character.isWhitespace(currentChar)) {
-                index++;
-                continue;
-            }
-
-            if (!isDigit(currentChar)) {
-                break;
-            }
-
-            if (digitCount == 0) {
-                if (currentChar == '0') {
-                    hasLeadingZero = true;
-                }
-            } else {
-                if (hasLeadingZero) {
-                    return INVALID_OPERAND;
-                }
-            }
-
-            value = (value * 10) + (currentChar - '0');
-            digitCount++;
-            index++;
-        }
-
-        if (digitCount == 0) {
-            return INVALID_OPERAND;
-        }
-
-        return value;
-    }
-
-    private static int parseOperandNextIndex(String expression, int length, int startIndex) {
-        int index = startIndex;
-
-        if (index >= length) {
-            return -1;
-        }
-
-        char firstChar = expression.charAt(index);
-        if (!isDigit(firstChar)) {
-            return -1;
-        }
-
-        int digitCount = 0;
-        boolean hasLeadingZero = false;
-
-        while (true) {
-            if (index >= length) {
-                break;
-            }
-
-            char currentChar = expression.charAt(index);
-
-            if (Character.isWhitespace(currentChar)) {
-                index++;
-                continue;
-            }
-
-            if (!isDigit(currentChar)) {
-                break;
-            }
-
-            if (digitCount == 0) {
-                if (currentChar == '0') {
-                    hasLeadingZero = true;
-                }
-            } else {
-                if (hasLeadingZero) {
-                    return -1;
-                }
-            }
-
-            digitCount++;
-            index++;
-        }
-
-        if (digitCount == 0) {
-            return -1;
-        }
-
-        return index;
-    }
-
     private static int skipWhitespace(String expression, int startIndex) {
         int index = startIndex;
 
         while (index < expression.length() && Character.isWhitespace(expression.charAt(index))) {
-            index++;
+            ++index;
         }
 
         return index;
     }
 
-    private static boolean isDigit(char c) {
-        return c >= '0' && c <= '9';
+    private static boolean isDigit(char character) {
+        return character >= '0' && character <= '9';
     }
 
-    private static boolean isBinaryOperator(char c) {
-        return c == '+' || c == '-' || c == '*' || c == '/';
+    private static boolean isBinaryOperator(char character) {
+        return character == '+' || character == '-' || character == '*' || character == '/';
     }
 }

@@ -14,12 +14,12 @@
 - 숫자는 10진수 정수 형태로만 표현되며 선행하는 0을 포함할 수 없다.
 
 - 지원하는 연산자는 다음과 같다:
-    - 이항 연산자:`+`, `-`, `*`, `/`
+    - 이항 연산자: `+`, `-`, `*`, `/`
     - 단항 부호: 음수를 나타내는 부호(`-`)
 
 - 연산자 우선순위는 일반적인 산술 규칙을 따른다.
 
-- 실습 명세에서 제공된 함수 시그니처는 수정할 수 없으나 필요에 따라 추가적인 `private` 도움 함수를 작성하는 것은 허용된다.
+- 실습 명세에서 제공된 메서드 시그니처는 수정할 수 없으나 필요에 따라 추가적인 `private` 도움 메서드를 작성하는 것은 허용된다.
 
 - 실습 명세에 명시되지 않은 동작은 제공된 예시 코드를 기준으로 추론하여 구현한다.
     - 예시 코드로도 추론이 어려운 경우 명세의 규칙을 위반하지 않는 범위 내에서 합리적으로 판단하여 구현한다.
@@ -28,29 +28,30 @@
 
 1. IntelliJ에서 `java-labs` 프로젝트를 연다.
 2. `02-expression-evaluator` 디렉터리로 이동한다.
-3. `02-expression-evaluator` 디렉터리 아래에 `src/main/java` 디렉터리를 생성한다.
-4. `src/main/java` 디렉터리 아래에 `com.example.expressionevaluator` 패키지를 생성한다.
+3. `02-expression-evaluator` 디렉터리에 제공된 `src/main/java` 디렉터리를 확인한다.
+4. `src/main/java` 디렉터리 아래의 `com.example.expressionevaluator` 패키지를 확인한다.
 5. `com.example.expressionevaluator` 패키지에 `ExpressionEvaluator` 클래스를 정의한다.
-6. `com.example.expressionevaluator` 패키지에 `Main` 클래스를 정의한다.
 
 ## 2. `ExpressionEvaluator` 클래스를 구현한다
 
-###  `evaluateOrNull()` 정적 메서드를 구현한다
+### 2.1. `evaluateOrNull()` 정적 메서드를 구현한다
 
 - 이 메서드는 문자열로 주어진 산술식을 입력으로 받아 계산 결과를 반환한다.
 
-- 이 메서드는 유일한 인자로 `String expression`을 받는다.
-    - `expression`에는 공백이 포함될 수 있으며 공백 문자의 종류와 개수는 일정하지 않을 수 있다.
-    - 공백은 계산 과정에서 의미 없는 문자로 취급하며 산술식의 올바름을 판단할 때도 무시한다.
+- 이 메서드는 유일한 매개 변수로 `String expressionOrNull`을 받는다.
+    - `expressionOrNull`에는 공백이 포함될 수 있으며 공백 문자의 종류와 개수는 일정하지 않을 수 있다.
+    - 공백은 피연산자와 이항 연산자 사이에서만 무시하며, 숫자를 구성하는 각 자리 사이의 공백은 허용하지 않는다.
 
 - 산술식은 이 실습에서 정의한 규칙에 부합하며 수학적으로 올바른 형태만을 올바른 산술식으로 간주한다.
 
 - 이 실습에서 `-` 기호는 다음과 같이 해석한다.
     - 이항 연산자 `-`
     - 음수를 나타내는 부호(`-`)
-        - 음수를 나타내는 부호(`-`)는 반드시 숫자와 붙어 있다고 간주한다.
+        - 음수를 나타내는 부호(`-`)는 숫자 바로 앞에 붙어 있어야 한다.
 
 - `/` 연산은 Java의 `int` 정수 나눗셈 규칙을 따른다. (소수점 이하 버림)
+
+- 산술식에 포함되는 모든 피연산자는 `int` 범위 내에 있다고 간주한다.
 
 - 산술식을 연산하는 과정에서 수행되는 모든 이항 연산의 결과는 `int` 범위 내에 있다고 간주한다.
 
@@ -74,5 +75,7 @@ ExpressionEvaluator.evaluateOrNull("2 + 3 * 4");          // "14"
 ExpressionEvaluator.evaluateOrNull("20 / 3");             // "6"
 
 ExpressionEvaluator.evaluateOrNull("1 +");                // null
+ExpressionEvaluator.evaluateOrNull("1 2 + 3");            // null
 ExpressionEvaluator.evaluateOrNull("2 * * 3");            // null
 ```
+

@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public final class TodoAnalyzer {
@@ -17,27 +19,22 @@ public final class TodoAnalyzer {
     private static final String BLOCK_TODO_PATTERN = "/* TODO: ";
     private static final String BLOCK_TODO_END = "*/";
 
-    private static final String[] ALLOWED_EXTENSIONS = {
-            ".c", ".cpp", ".h",
-            ".java", ".cs",
-            ".py",
-            ".js", ".ts", ".html"
-    };
+    private static final List<String> ALLOWED_EXTENSIONS = List.of(".c", ".cpp", ".h", ".java", ".cs", ".py", ".js", ".ts", ".html");
 
     private TodoAnalyzer() {
     }
 
-    public static String generateTodoReportOrNull(final String dirPath) {
-        if (!isValidDirPath(dirPath)) {
+    public static String generateTodoReportOrNull(final String directoryPathOrNull) {
+        if (!isValidDirectoryPath(directoryPathOrNull)) {
             return null;
         }
 
-        final Path directoryPath = Paths.get(dirPath);
+        final Path directoryPath = Paths.get(directoryPathOrNull);
 
         final List<Path> filesInDirectory;
         try {
             filesInDirectory = listRegularFiles(directoryPath);
-        } catch (final IOException e) {
+        } catch (final IOException ignored) {
             return null;
         }
 
@@ -54,7 +51,7 @@ public final class TodoAnalyzer {
             final String fileContent;
             try {
                 fileContent = Files.readString(filePath, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
+            } catch (final IOException ignored) {
                 return null;
             }
 
@@ -70,39 +67,39 @@ public final class TodoAnalyzer {
         try {
             reportPath = createNextReportPath(directoryPath);
             Files.writeString(reportPath, reportContent, StandardCharsets.UTF_8);
-        } catch (final IOException e) {
+        } catch (final IOException ignored) {
             return null;
         }
 
         return reportPath.toAbsolutePath().toString();
     }
 
-    private static boolean isValidDirPath(final String dirPath) {
-        if (dirPath == null) {
+    private static boolean isValidDirectoryPath(final String directoryPathOrNull) {
+        if (directoryPathOrNull == null) {
             return false;
         }
 
-        if (dirPath.length() < 1) {
+        if (directoryPathOrNull.length() < 1) {
             return false;
         }
 
-        if (isBlank(dirPath)) {
+        if (isBlank(directoryPathOrNull)) {
             return false;
         }
 
         final Path directoryPath;
         try {
-            directoryPath = Paths.get(dirPath);
-        } catch (final Exception e) {
+            directoryPath = Paths.get(directoryPathOrNull);
+        } catch (final InvalidPathException ignored) {
             return false;
         }
 
         return Files.isDirectory(directoryPath);
     }
 
-    private static boolean isBlank(final String s) {
-        for (int i = 0; i < s.length(); ++i) {
-            if (!Character.isWhitespace(s.charAt(i))) {
+    private static boolean isBlank(final String text) {
+        for (int i = 0; i < text.length(); ++i) {
+            if (!Character.isWhitespace(text.charAt(i))) {
                 return false;
             }
         }
@@ -125,7 +122,7 @@ public final class TodoAnalyzer {
     }
 
     private static boolean hasAllowedExtension(final String fileName) {
-        final String lowerFileName = fileName.toLowerCase();
+        final String lowerFileName = fileName.toLowerCase(Locale.ROOT);
 
         for (final String extension : ALLOWED_EXTENSIONS) {
             if (lowerFileName.endsWith(extension)) {
@@ -192,11 +189,11 @@ public final class TodoAnalyzer {
         return true;
     }
 
-    private static int findLineEnd(final String content, final int start) {
-        int index = start;
+    private static int findLineEnd(final String content, final int startIndex) {
+        int index = startIndex;
         while (index < content.length()) {
-            final char c = content.charAt(index);
-            if (c == '\n' || c == '\r') {
+            final char character = content.charAt(index);
+            if (character == '\n' || character == '\r') {
                 break;
             }
 
@@ -206,8 +203,8 @@ public final class TodoAnalyzer {
         return index;
     }
 
-    private static void addNormalizedTodoIfNotEmpty(final List<String> todos, final String raw) {
-        final String normalizedTodo = normalizeTodo(raw);
+    private static void addNormalizedTodoIfNotEmpty(final List<String> todos, final String rawTodo) {
+        final String normalizedTodo = normalizeTodo(rawTodo);
         if (normalizedTodo.length() == 0) {
             return;
         }
@@ -215,8 +212,8 @@ public final class TodoAnalyzer {
         todos.add(normalizedTodo);
     }
 
-    private static String normalizeTodo(final String raw) {
-        final String trimmed = trimAllWhitespace(raw);
+    private static String normalizeTodo(final String rawTodo) {
+        final String trimmed = trimAllWhitespace(rawTodo);
         if (trimmed.length() == 0) {
             return "";
         }
@@ -225,9 +222,9 @@ public final class TodoAnalyzer {
 
         boolean previousWasWhitespace = false;
         for (int i = 0; i < trimmed.length(); ++i) {
-            final char c = trimmed.charAt(i);
+            final char character = trimmed.charAt(i);
 
-            if (Character.isWhitespace(c)) {
+            if (Character.isWhitespace(character)) {
                 if (!previousWasWhitespace) {
                     normalizedBuilder.append(' ');
                     previousWasWhitespace = true;
@@ -236,7 +233,7 @@ public final class TodoAnalyzer {
                 continue;
             }
 
-            normalizedBuilder.append(c);
+            normalizedBuilder.append(character);
             previousWasWhitespace = false;
         }
 
@@ -247,26 +244,26 @@ public final class TodoAnalyzer {
         return normalizedBuilder.toString();
     }
 
-    private static String trimAllWhitespace(final String s) {
+    private static String trimAllWhitespace(final String text) {
         int leftIndex = 0;
-        while (leftIndex < s.length() && Character.isWhitespace(s.charAt(leftIndex))) {
+        while (leftIndex < text.length() && Character.isWhitespace(text.charAt(leftIndex))) {
             ++leftIndex;
         }
 
-        int rightIndex = s.length() - 1;
-        while (rightIndex >= leftIndex && Character.isWhitespace(s.charAt(rightIndex))) {
+        int rightIndex = text.length() - 1;
+        while (rightIndex >= leftIndex && Character.isWhitespace(text.charAt(rightIndex))) {
             --rightIndex;
         }
 
-        return s.substring(leftIndex, rightIndex + 1);
+        return text.substring(leftIndex, rightIndex + 1);
     }
 
-    private static String buildReportContent(final List<Path> allFilesSorted, final Map<String, List<String>> todosByFileName) {
+    private static String buildReportContent(final List<Path> sortedFiles, final Map<String, List<String>> todosByFileName) {
         final StringBuilder reportBuilder = new StringBuilder();
 
         boolean isFirstFileBlock = true;
 
-        for (final Path filePath : allFilesSorted) {
+        for (final Path filePath : sortedFiles) {
             final String fileName = filePath.getFileName().toString();
             final List<String> todos = todosByFileName.get(fileName);
 

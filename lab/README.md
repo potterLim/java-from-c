@@ -29,10 +29,18 @@
 |  02  | Expression Evaluator   | [`02-expression-evaluator`](./02-expression-evaluator/)   |
 |  03  | TODO Analyzer          | [`03-todo-analyzer`](./03-todo-analyzer/)                 |
 |  04  | Space Convoy Simulator | [`04-space-convoy`](./04-space-convoy/)                   |
-|  05  | Data Structures        | [`05-data-structures`](./05-data-structures/)             |
+|  05  | Linear Data Structures | [`05-linear-data-structures`](./05-linear-data-structures/) |
 
-각 실습 디렉터리에는 기본 코드 구조를 포함한 과제 설명 파일(`SPEC.md`)과 예시 코드가 있다.  
-과제 명세를 꼼꼼히 읽고 모든 테스트를 통과한 후 예시 코드와 본인의 구현을 비교·분석하면 학습 효과를 더욱 높일 수 있다.
+각 실습 디렉터리에는 과제 설명 파일(`SPEC.md`), 검증용 `Main` 클래스, 예시 코드가 있다.  
+과제 명세를 꼼꼼히 읽고 검증용 `Main` 클래스로 주요 동작을 확인한 후 예시 코드와 본인의 구현을 비교·분석하면 학습 효과를 더욱 높일 수 있다.
+
+## 검증용 Main 실행
+
+각 실습 디렉터리에는 구현 결과를 확인하기 위한 검증용 `Main` 클래스가 제공된다.
+
+과제 명세에 따라 필요한 클래스를 구현한 뒤, 해당 실습의 `Main` 클래스를 실행하여 주요 동작이 기대 결과와 일치하는지 확인한다.
+
+검증용 `Main`은 학습자가 직접 수정해야 하는 과제 대상이 아니며, 구현한 코드가 명세의 핵심 규칙을 만족하는지 확인하기 위한 실행 코드이다.
 
 ## 실습 흐름과 학습 목표
 
@@ -41,13 +49,16 @@
 초반 실습에서는 문자열, 배열, 조건문, 반복문을 직접 다루며 Java 문법과 절차적 구현 방식에 익숙해지는 데 집중한다.  
 이후에는 복잡한 문제를 작은 단위로 나누고 상태를 분리하는 구조적 사고를 훈련하며 파일을 읽고 파일에 포함된 데이터를 처리하는 과정을 통해 입력 데이터가 콘솔을 넘어 외부 자원으로 확장될 때의 전형적인 처리 흐름을 경험한다.
 
+파일 입출력은 이 실습들의 중심 학습 목표라기보다, 외부에 저장된 데이터를 Java 코드 안의 문자열, 배열, 컬렉션, 객체로 가져오기 위한 입력 단계로 사용한다.  
+파일에서 읽어온 데이터를 어떤 규칙으로 해석하고, 어떤 구조로 정리하며, 어떤 책임으로 나누어 처리할지에 더 집중한다.
+
 다음 단계에서는 여러 클래스를 정의하고 역할에 따라 로직을 분리하여 연결하는 방식으로 객체 간 책임 분리와 상태 관리 등 클래스 기반 구현의 기본적인 사고 방식을 훈련한다.  
 이 단계의 목적은 복잡한 객체지향 설계를 완성하는 것이 아니라 여러 클래스를 사용해 로직을 나누고 조합하는 경험을 쌓는 데 있다.
 
 마지막 실습에서는 배열과 인덱스를 직접 다루며 다양한 자료구조를 구현한다.  
 이 단계는 지금까지 익힌 문법, 조건문, 반복문, 클래스 구조를 모두 활용하여 정확성과 가독성을 동시에 요구하는 구현을 완성하는 종합 훈련 단계에 해당한다.
 
-## 코딩 스탠다드와 가독성
+## 코딩 표준과 가독성
 
 모든 실습은 제공된 [Java 코딩 표준](../java-coding-standard.md)을 기준으로 작성한다.
 
@@ -125,7 +136,7 @@ java-labs/
 - `02-expression-evaluator`
 - `03-todo-analyzer`
 - `04-space-convoy`
-- `05-data-structures`
+- `05-linear-data-structures`
 
 생성 후 구조:
 
@@ -137,7 +148,7 @@ java-labs/
  ├─ 02-expression-evaluator/
  ├─ 03-todo-analyzer/
  ├─ 04-space-convoy/
- ├─ 05-data-structures/
+ ├─ 05-linear-data-structures/
  ├─ gradle/
  ├─ .gitignore
  ├─ build.gradle
@@ -157,7 +168,7 @@ include '01-big-number-calculator'
 include '02-expression-evaluator'
 include '03-todo-analyzer'
 include '04-space-convoy'
-include '05-data-structures'
+include '05-linear-data-structures'
 ```
 
 #### 2.3. 루트 build.gradle 공통 설정 작성
@@ -191,8 +202,8 @@ subprojects {
 - `01-big-number-calculator/build.gradle`
 - `02-expression-evaluator/build.gradle`
 - `03-todo-analyzer/build.gradle`
-- `04-04-space-convoy/build.gradle`
-- `05-data-structures/build.gradle`
+- `04-space-convoy/build.gradle`
+- `05-linear-data-structures/build.gradle`
 
 이 단계에서는 파일 내용은 비워 둔다.
 
@@ -203,3 +214,4 @@ IntelliJ 오른쪽 Gradle 창에서 다음 버튼 클릭:
 - `Sync All Gradle Projects` (새로고침 아이콘)
 
 정상이라면 Gradle 창에 모든 실습 모듈이 표시된다.
+

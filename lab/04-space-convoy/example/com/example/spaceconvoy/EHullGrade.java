@@ -1,6 +1,6 @@
 package com.example.spaceconvoy;
 
-public enum HullGrade {
+public enum EHullGrade {
     LIGHT,
     MEDIUM,
     HEAVY,

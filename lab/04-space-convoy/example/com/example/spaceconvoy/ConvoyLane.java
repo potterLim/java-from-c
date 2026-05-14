@@ -2,52 +2,57 @@ package com.example.spaceconvoy;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConvoyLane {
-    private static final double LIGHT_MULTIPLIER = 1.25;
-    private static final double MEDIUM_MULTIPLIER = 1.00;
-    private static final double HEAVY_MULTIPLIER = 0.85;
-    private static final double ARMORED_MULTIPLIER = 0.70;
+public final class ConvoyLane {
+    private final String mLaneName;
+    private final int mCapacity;
+    private int mTurns;
 
-    private static final int MINIMUM_DAMAGE = 1;
-
-    private final String laneName;
-    private final int capacity;
-    private int turns;
-
-    private final ArrayList<Ship> ships;
+    private final ArrayList<Ship> mShips;
 
     public ConvoyLane(String laneName, int capacity) {
-        this.laneName = laneName;
-        this.capacity = capacity;
-        this.turns = 0;
-        this.ships = new ArrayList<>();
+        mLaneName = laneName;
+        mCapacity = capacity;
+        mTurns = 0;
+        mShips = new ArrayList<>();
     }
 
     public String getLaneName() {
-        return laneName;
+        return mLaneName;
     }
 
     public int getCapacity() {
-        return capacity;
+        return mCapacity;
     }
 
     public int getTurns() {
-        return turns;
+        return mTurns;
     }
 
-    public void loadShips(String filePath) {
-        ships.clear();
-        turns = 0;
+    public void loadShips(String filePathOrNull) {
+        mShips.clear();
+        mTurns = 0;
+
+        if (filePathOrNull == null || filePathOrNull.isBlank()) {
+            return;
+        }
+
+        Path shipFilePath;
+        try {
+            shipFilePath = Path.of(filePathOrNull);
+        } catch (InvalidPathException ignored) {
+            return;
+        }
 
         try {
-            List<String> lines = Files.readAllLines(Path.of(filePath));
+            List<String> shipLines = Files.readAllLines(shipFilePath);
 
-            for (String line : lines) {
-                if (ships.size() >= capacity) {
+            for (String line : shipLines) {
+                if (mShips.size() >= mCapacity) {
                     break;
                 }
 
@@ -55,16 +60,16 @@ public class ConvoyLane {
                     continue;
                 }
 
-                ships.add(parseShip(line));
+                mShips.add(parseShip(line));
             }
-        } catch (IOException e) {
-            ships.clear();
-            turns = 0;
+        } catch (IOException ignored) {
+            mShips.clear();
+            mTurns = 0;
         }
     }
 
     public void advanceTurn() {
-        int shipCount = ships.size();
+        int shipCount = mShips.size();
         if (shipCount <= 1) {
             return;
         }
@@ -72,22 +77,26 @@ public class ConvoyLane {
         int[] predictedDamages = predictIncomingDamageInternal(shipCount);
 
         for (int defenderIndex = 0; defenderIndex < shipCount; ++defenderIndex) {
-            ships.get(defenderIndex).applyHullChange(-predictedDamages[defenderIndex]);
+            mShips.get(defenderIndex).applyHullChange(-predictedDamages[defenderIndex]);
         }
 
         removeDestroyedShips();
 
-        for (int i = 0; i < ships.size(); ++i) {
-            ships.get(i).repair();
+        for (int i = 0; i < mShips.size(); ++i) {
+            mShips.get(i).repair();
         }
 
-        turns++;
+        ++mTurns;
     }
 
     public int[] predictIncomingDamageOrNull() {
-        int shipCount = ships.size();
+        int shipCount = mShips.size();
         if (shipCount == 0) {
             return null;
+        }
+
+        if (shipCount == 1) {
+            return new int[]{ 0 };
         }
 
         return predictIncomingDamageInternal(shipCount);
@@ -97,7 +106,7 @@ public class ConvoyLane {
         String[] tokens = line.split(",", -1);
 
         String shipName = tokens[0];
-        HullGrade shipHullGrade = HullGrade.valueOf(tokens[1]);
+        EHullGrade shipHullGrade = EHullGrade.valueOf(tokens[1]);
         int initialHull = Integer.parseInt(tokens[2]);
         int laserDamage = Integer.parseInt(tokens[3]);
         int shield = Integer.parseInt(tokens[4]);
@@ -112,50 +121,21 @@ public class ConvoyLane {
         for (int defenderIndex = 0; defenderIndex < shipCount; ++defenderIndex) {
             int attackerIndex = (defenderIndex + 1) % shipCount;
 
-            Ship attacker = ships.get(attackerIndex);
-            Ship defender = ships.get(defenderIndex);
+            Ship attacker = mShips.get(attackerIndex);
+            Ship defender = mShips.get(defenderIndex);
 
-            int damageAfterShield = attacker.getLaserDamage() - defender.getShield();
-            if (damageAfterShield <= 0) {
-                predictedDamages[defenderIndex] = 0;
-                continue;
-            }
-
-            double hullMultiplier;
-            switch (defender.getHullGrade()) {
-                case LIGHT:
-                    hullMultiplier = LIGHT_MULTIPLIER;
-                    break;
-                case MEDIUM:
-                    hullMultiplier = MEDIUM_MULTIPLIER;
-                    break;
-                case HEAVY:
-                    hullMultiplier = HEAVY_MULTIPLIER;
-                    break;
-                case ARMORED:
-                    hullMultiplier = ARMORED_MULTIPLIER;
-                    break;
-                default:
-                    hullMultiplier = MEDIUM_MULTIPLIER;
-                    break;
-            }
-
-            int finalDamage = (int) (damageAfterShield * hullMultiplier);
-            if (finalDamage < MINIMUM_DAMAGE) {
-                finalDamage = MINIMUM_DAMAGE;
-            }
-
-            predictedDamages[defenderIndex] = finalDamage;
+            predictedDamages[defenderIndex] = attacker.calculateLaserDamageTo(defender);
         }
 
         return predictedDamages;
     }
 
     private void removeDestroyedShips() {
-        for (int i = ships.size() - 1; i >= 0; --i) {
-            if (ships.get(i).getHull() == 0) {
-                ships.remove(i);
+        for (int i = mShips.size() - 1; i >= 0; --i) {
+            if (mShips.get(i).getHull() == 0) {
+                mShips.remove(i);
             }
         }
     }
+
 }

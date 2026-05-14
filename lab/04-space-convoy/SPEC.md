@@ -2,12 +2,17 @@
 
 이 실습에서는 여러 대의 우주선이 하나의 항로(convoy lane)에 진입하여 정해진 규칙에 따라 레이저 교전과 수리 과정을 반복하는 턴 기반 시뮬레이션인 `Space Convoy Simulator`를 구현한다.
 
-항로는 수용 가능한 최대 우주선 수(capacity)를 가지며 수용 한도에 도달한 경우 추가로 우주선을 진입시킬 수 없다. 항로에 진입한 우주선들은 로드된 순서를 유지한 채 매 턴 행동을 수행한다. 각 우주선은 자신의 바로 앞에 위치한 우주선을 공격 대상으로 삼으며 첫 번째 우주선의 공격 대상은 순환 구조에 따라 마지막 우주선이 된다.
+항로는 수용 가능한 최대 우주선 수(capacity)를 가진다. 수용 한도에 도달한 항로에는 추가 우주선이 진입할 수 없다.
 
-한 턴은 레이저 발사 단계와 수리 단계로 구성된다.  
-레이저 발사 단계가 모두 끝난 뒤 내구도(`hull`)가 0이 된 우주선은 즉시 항로에서 제거되며 제거된 우주선은 해당 턴의 수리 단계에 참여하지 않는다. 이 과정을 반복하여 항로에 우주선이 1대 이하로 남은 경우 시뮬레이션은 더 이상 진행되지 않는다.
+항로에 진입한 우주선들은 로드된 순서를 유지한 채 매 턴 행동을 수행한다. 각 우주선은 자신의 바로 앞에 위치한 우주선을 공격 대상으로 삼는다. 첫 번째 우주선의 공격 대상은 순환 구조에 따라 마지막 우주선이 된다.
+
+한 턴은 레이저 발사 단계와 수리 단계로 구성되며, 레이저 발사 단계가 모두 끝난 뒤 내구도(`hull`)가 0이 된 우주선은 즉시 항로에서 제거된다. 제거된 우주선은 해당 턴의 수리 단계에 참여하지 않는다.
+
+이 과정을 반복하여 항로에 우주선이 1대 이하로 남으면 시뮬레이션은 더 이상 진행되지 않는다.
 
 이 실습의 목적은 우주선, 공격 규칙, 피해 처리, 선체 등급, 항로 상태와 같은 요소를 객체 지향적으로 분리하고 모델링하여 여러 클래스가 협력하는 턴 기반 시뮬레이션을 명확한 구조로 설계·구현하는 경험을 하는 데 있다.
+
+CSV 파일 읽기는 시뮬레이션에 사용할 우주선 데이터를 준비하기 위한 입력 단계이며, 이 실습의 핵심은 파일 형식 자체보다 읽어온 데이터를 객체로 구성하고 여러 객체가 정해진 규칙에 따라 협력하도록 만드는 데 있다.
 
 ## 전반적인 규칙
 
@@ -26,16 +31,15 @@
 
 1. IntelliJ에서 `java-labs` 프로젝트를 연다.
 2. `04-space-convoy` 디렉터리로 이동한다.
-3. `04-space-convoy` 디렉터리 아래에 `src/main/java` 디렉터리를 생성한다.
-4. `src/main/java` 디렉터리 아래에 `com.example.spaceconvoy` 패키지를 생성한다.
-5. `com.example.spaceconvoy` 패키지에 `HullGrade` 열거형(enum)을 정의한다.
+3. `04-space-convoy` 디렉터리에 제공된 `src/main/java` 디렉터리를 확인한다.
+4. `src/main/java` 디렉터리 아래의 `com.example.spaceconvoy` 패키지를 확인한다.
+5. `com.example.spaceconvoy` 패키지에 `EHullGrade` 열거형(enum)을 정의한다.
 6. `com.example.spaceconvoy` 패키지에 `Ship` 클래스를 정의한다.
 7. `com.example.spaceconvoy` 패키지에 `ConvoyLane` 클래스를 정의한다.
-8. `com.example.spaceconvoy` 패키지에 `Main` 클래스를 정의한다.
 
 ## 2. 시뮬레이터를 구현한다
 
-### 2.1. `HullGrade` 열거형을 구현한다
+### 2.1. `EHullGrade` 열거형을 구현한다
 
 - 우주선은 다음의 4가지 선체 등급 중 하나를 가진다.
     - LIGHT
@@ -47,23 +51,23 @@
 
 ### 2.2. `Ship` 클래스를 구현한다
 
-- `Ship` 클래스의 생성자는 다음 순서의 인자들을 받는다.
+- `Ship` 클래스의 생성자는 다음 순서의 매개 변수들을 받는다.
     - `String name`
-    - `HullGrade hullGrade`
+    - `EHullGrade hullGrade`
     - `int hull`
     - `int laserDamage`
     - `int shield`
     - `int repairAmount`
 
-- 생성자의 `hull`, `laserDamage`, `shield`, `repairAmount` 인자로 음수값이 들어오지 않는다고 가정한다.
+- 생성자의 `hull`, `laserDamage`, `shield`, `repairAmount` 매개 변수로 음수값이 들어오지 않는다고 가정한다.
 
 - `Ship` 클래스는 다음의 멤버 변수들을 가진다.
-    - `String name`
-    - `HullGrade hullGrade`
-    - `int hull`
-    - `int laserDamage`
-    - `int shield`
-    - `int repairAmount`
+    - `String mName`
+    - `EHullGrade mHullGrade`
+    - `int mHull`
+    - `int mLaserDamage`
+    - `int mShield`
+    - `int mRepairAmount`
 
 - 위 멤버 변수들은 클래스 외부에서 직접 수정할 수 없어야 한다.
 
@@ -73,24 +77,24 @@
 
 - `applyHullChange` 메서드는 우주선의 내구도(`hull`)를 변화시킬 때 사용한다.
 
-- 이 메서드는 유일한 인자로 `int delta`를 받는다.
+- 이 메서드는 유일한 매개 변수로 `int delta`를 받는다.
 
 - 우주선의 내구도는 `delta`만큼 변화한다.
 
 - 이 메서드는 반환값을 가지지 않는다.
 
 ```java
-Ship ship = new Ship("Ship", HullGrade.MEDIUM, 40, 14, 8, 3);
+Ship ship = new Ship("Ship", EHullGrade.MEDIUM, 40, 14, 8, 3);
 
-ship.applyHullChange(6);  // ship.hull == 46
-ship.applyHullChange(-9); // ship.hull == 37
+ship.applyHullChange(6);  // ship.getHull() == 46
+ship.applyHullChange(-9); // ship.getHull() == 37
 ```
 
 #### 2.2.2. `fireLaser` 메서드를 구현한다
 
 - `fireLaser` 메서드는 우주선이 다른 우주선에게 레이저를 발사할 때 사용한다.
 
-- 이 메서드는 유일한 인자로 `Ship otherShip`을 받으며 이는 레이저 공격을 받는 우주선을 의미한다.
+- 이 메서드는 유일한 매개 변수로 `Ship otherShip`을 받으며 이는 레이저 공격을 받는 우주선을 의미한다.
 
 - 레이저의 기본 피해치는 공격하는 우주선의 `laserDamage`와 같다.
 
@@ -114,17 +118,17 @@ ship.applyHullChange(-9); // ship.hull == 37
 - 이 메서드는 반환값을 가지지 않는다.
 
 ```java
-Ship defender = new Ship("Defender", HullGrade.HEAVY, 24, 11, 6, 4);
-Ship attacker = new Ship("Attacker", HullGrade.MEDIUM, 28, 15, 10, 3);
+Ship defender = new Ship("Defender", EHullGrade.HEAVY, 24, 11, 6, 4);
+Ship attacker = new Ship("Attacker", EHullGrade.MEDIUM, 28, 15, 10, 3);
 
-attacker.fireLaser(defender); // defender.hull == 17
+attacker.fireLaser(defender); // defender.getHull() == 17
 ```
 
 #### 2.2.3. `repair` 메서드를 구현한다
 
 - `repair` 메서드는 우주선이 자신의 선체를 수리하여 내구도(`hull`)를 회복할 때 사용한다.
 
-- 이 메서드는 인자를 받지 않는다.
+- 이 메서드는 매개 변수를 받지 않는다.
 
 - 회복량은 `repairAmount`와 같다.
 
@@ -133,23 +137,23 @@ attacker.fireLaser(defender); // defender.hull == 17
 - 이 메서드는 반환값을 가지지 않는다.
 
 ```java
-Ship defender = new Ship("Defender", HullGrade.HEAVY, 24, 11, 6, 4);
+Ship defender = new Ship("Defender", EHullGrade.HEAVY, 24, 11, 6, 4);
 
-defender.repair(); // defender.hull == 28
+defender.repair(); // defender.getHull() == 28
 ```
 
 ### 2.3. `ConvoyLane` 클래스를 구현한다
 
-- `ConvoyLane` 클래스의 생성자는 다음 순서의 인자들을 받는다.
+- `ConvoyLane` 클래스의 생성자는 다음 순서의 매개 변수들을 받는다.
     - `String laneName`
     - `int capacity`
 
-- 생성자의 `capacity` 인자로 음수값이 들어오지 않는다고 가정한다.
+- 생성자의 `capacity` 매개 변수로 음수값이 들어오지 않는다고 가정한다.
 
 - `ConvoyLane` 클래스는 다음의 멤버 변수들을 가진다.
-    - `String laneName`
-    - `int capacity`
-    - `int turns`
+    - `String mLaneName`
+    - `int mCapacity`
+    - `int mTurns`
 
 - 위 값들은 클래스 외부에서 직접 수정할 수 없어야 한다.
 
@@ -159,7 +163,7 @@ defender.repair(); // defender.hull == 28
 
 - `loadShips` 메서드는 `.csv` 형식 파일로부터 우주선들을 순서대로 읽어 항로에 추가할 때 사용한다.
 
-- 이 메서드는 유일한 인자로 `String filePath`를 받는다.
+- 이 메서드는 유일한 매개 변수로 `String filePathOrNull`을 받는다.
 
 - `.csv` 형식 파일의 각 줄은 우주선 하나의 정보를 담고 있으며 각 줄의 포맷은 다음과 같다.
     - `Name,HullGrade,Hull,LaserDamage,Shield,RepairAmount`
@@ -193,7 +197,7 @@ lane.loadShips("datas/ships.csv");
 
 - `advanceTurn` 메서드는 항로의 시뮬레이션을 한 턴 진행할 때 사용한다.
 
-- 이 메서드는 인자를 받지 않는다.
+- 이 메서드는 매개 변수를 받지 않는다.
 
 - 한 턴에는 레이저 발사 단계와 수리 단계가 포함된다.
 
@@ -207,12 +211,13 @@ lane.loadShips("datas/ships.csv");
 
 - `predictIncomingDamageOrNull` 메서드는 다음 턴의 레이저 발사 단계에서 각 우주선이 입게 될 예상 최종 피해치를 미리 계산할 때 사용한다.
 
-- 이 메서드는 인자를 받지 않는다.
+- 이 메서드는 매개 변수를 받지 않는다.
 
 - 항로에 존재하는 우주선이 0대인 경우 `null`을 반환한다.
 
 - 항로에 존재하는 우주선이 1대 이상인 경우 항로에 존재하는 우주선 수와 같은 길이의 `int[]`를 반환한다.
     - 반환 배열은 항로에 로드된 우주선들의 순서와 동일한 순서를 가지며 각 원소는 해당 우주선이 다음 턴에 입게 될 예상 최종 피해치를 의미한다.
+    - 항로에 존재하는 우주선이 1대뿐이면 레이저 발사 단계가 진행되지 않으므로 반환 배열의 유일한 원소는 `0`이다.
 
 - 이 메서드는 실제로 레이저를 발사하거나 우주선의 내구도(`hull`)를 변화시키지 않는다.
 
@@ -232,3 +237,4 @@ lane.loadShips("datas/ships.csv");
 
 int[] predicted = lane.predictIncomingDamageOrNull(); // [8, 6, 8, 1, 7]
 ```
+

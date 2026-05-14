@@ -5,6 +5,8 @@
 이 실습에서는 특정 디렉터리에 포함된 여러 텍스트 파일을 분석하여 코드에 남아 있는 TODO 항목을 체계적으로 추출하고 정해진 형식의 리포트 문자열을 생성하는 `Todo Analyzer`를 구현한다.
 이를 통해 파일 입출력, 문자열 파싱, 상태 기반 처리, 그리고 결과 정규화 및 정렬과 같은 여러 처리 과정을 하나의 프로그램으로 엮는 경험을 한다.
 
+이 실습에서 파일 입출력은 분석할 텍스트를 가져오고 리포트를 저장하기 위한 수단이며, 핵심은 읽어온 문자열에서 의미 있는 TODO 항목을 찾아 일관된 결과로 정리하는 데 있다.
+
 이 실습의 목적은 단순히 파일을 읽는 데 그치지 않고 명확한 규칙에 따라 정보를 수집하고 그 결과를 일관된 형식으로 정리하여 제공하는 프로그램을 직접 설계하고 구현하는 데 있다.
 
 ## 전반적인 규칙
@@ -21,7 +23,9 @@
     - `.py`
     - `.js`, `.ts`, `.html`
 
-- 실습 명세에서 제공된 함수 시그니처는 수정할 수 없으나 필요에 따라 추가적인 `private` 도움 함수를 작성하는 것은 허용된다.
+- 확장자 비교는 대소문자를 구분하지 않는다.
+
+- 실습 명세에서 제공된 메서드 시그니처는 수정할 수 없으나 필요에 따라 추가적인 `private` 도움 메서드를 작성하는 것은 허용된다.
 
 - 실습 명세에 명시되지 않은 동작은 제공된 예시 코드를 기준으로 추론하여 구현한다.
     - 예시 코드로도 추론이 어려운 경우 명세의 규칙을 위반하지 않는 범위 내에서 합리적으로 판단하여 구현한다.
@@ -30,10 +34,9 @@
 
 1. IntelliJ에서 `java-labs` 프로젝트를 연다.
 2. `03-todo-analyzer` 디렉터리로 이동한다.
-3. `03-todo-analyzer` 디렉터리 아래에 `src/main/java` 디렉터리를 생성한다.
-4. `src/main/java` 디렉터리 아래에 `com.example.todoanalyzer` 패키지를 생성한다.
+3. `03-todo-analyzer` 디렉터리에 제공된 `src/main/java` 디렉터리를 확인한다.
+4. `src/main/java` 디렉터리 아래의 `com.example.todoanalyzer` 패키지를 확인한다.
 5. `com.example.todoanalyzer` 패키지에 `TodoAnalyzer` 클래스를 정의한다.
-6. `com.example.todoanalyzer` 패키지에 `Main` 클래스를 정의한다.
 
 ## 2. `TodoAnalyzer` 클래스를 구현한다
 
@@ -42,14 +45,14 @@
 - `generateTodoReportOrNull` 메서드는 지정한 디렉터리에 존재하는 파일들을 분석하여 TODO 리포트를 생성할 때 사용한다.
     - 하위 디렉터리는 탐색하지 않으며 지정한 디렉터리에 바로 존재하는 파일들만을 분석 대상으로 삼는다.
 
-- 이 메서드는 유일한 인자로 `String dirPath`를 받는다.
+- 이 메서드는 유일한 매개 변수로 `String directoryPathOrNull`을 받는다.
 
 - 반환 규칙은 다음과 같다:
-    - `dirPath`가 유효하지 않은 경로이거나 TODO 리포트를 올바르게 생성하는 데 실패한다면 `null`을 반환한다.
+    - `directoryPathOrNull`이 유효하지 않은 경로이거나 TODO 리포트를 올바르게 생성하는 데 실패한다면 `null`을 반환한다.
     - TODO 리포트를 생성하는 데 성공한다면 생성한 리포트 파일의 절대 경로(absolute path)를 반환한다.
 
 - 리포트 파일 생성 규칙은 다음과 같다:
-    - 리포트 파일은 `dirPath` 디렉터리 바로 아래에 생성한다.
+    - 리포트 파일은 `directoryPathOrNull` 디렉터리 바로 아래에 생성한다.
     - 기본 파일명은 `report.txt`이다.
     - 동일한 이름의 파일이 이미 존재하는 경우 다음 규칙에 따라 파일명을 결정한다:
         - `report.txt`가 존재하면 `report-2.txt`
@@ -91,7 +94,7 @@
 - 리포트는 다음 규칙의 텍스트로 구성한다.
     1. 파일 경로
         - TODO가 1개 이상 존재하는 파일에 대해서만 리포트에 포함한다.
-        - 파일명은 사전순 오름차순으로 정렬하여 출력한다.
+        - 파일명은 Java 문자열의 기본 비교 기준에 따라 오름차순으로 정렬하여 출력한다.
         - 각 파일의 첫 줄은 파일명(확장자 포함)으로 출력한다.
 
     2. TODO 항목
@@ -135,7 +138,7 @@ public final class Beta {
 ```
 
 ```java
-String reportFilePath = TodoAnalyzer.generateTodoReportOrNull(dirPath);
+String reportFilePath = TodoAnalyzer.generateTodoReportOrNull(directoryPath);
 
 // reportFilePath == "/home/user/projects/todo-analyzer/testdata/report.txt"
 ```
@@ -150,3 +153,4 @@ beta.java
 - refactor main logic - extract method - remove duplication
 - add input validation
 ```
+
