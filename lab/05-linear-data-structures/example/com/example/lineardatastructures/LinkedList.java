@@ -44,10 +44,6 @@ public class LinkedList {
             nodeToInsert.changeNext(mHead);
             mHead = nodeToInsert;
 
-            if (mCount == 0) {
-                mTail = nodeToInsert;
-            }
-
             ++mCount;
 
             return true;
