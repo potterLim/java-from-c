@@ -1,6 +1,6 @@
 package com.example.userdefinedtypes;
 
-public enum SubscriptionTier {
+public enum ESubscriptionTier {
     FREE,
     PRO
 }

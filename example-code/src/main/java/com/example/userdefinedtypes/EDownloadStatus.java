@@ -1,6 +1,6 @@
 package com.example.userdefinedtypes;
 
-public enum DownloadStatus {
+public enum EDownloadStatus {
     QUEUED,
     DOWNLOADING,
     COMPLETED,

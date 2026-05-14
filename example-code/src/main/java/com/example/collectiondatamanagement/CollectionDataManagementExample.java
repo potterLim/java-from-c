@@ -1,59 +1,84 @@
-package com.example.collections;
+package com.example.collectiondatamanagement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public final class CollectionsExample {
-    public static void main(String[] args) {
-        printHeader("Collections");
+public final class CollectionDataManagementExample {
+    private CollectionDataManagementExample() {
+    }
 
+    public static void main(String[] args) {
+        printHeader("Collection Data Management");
+
+        demoWrapperTypes();
         demoArrayList();
         demoHashSet();
         demoHashMap();
     }
 
+    private static void demoWrapperTypes() {
+        printSectionTitle("Wrapper types: primitive values in collections");
+
+        ArrayList<Integer> scores = new ArrayList<>();
+
+        scores.add(90);
+        scores.add(85);
+        scores.add(100);
+
+        int firstScore = scores.get(0);
+        int totalScore = 0;
+
+        for (int score : scores) {
+            totalScore += score;
+        }
+
+        System.out.println("Scores = " + scores);
+        System.out.println("firstScore = " + firstScore);
+        System.out.println("totalScore = " + totalScore);
+    }
+
     private static void demoArrayList() {
         printSectionTitle("ArrayList: ordered list, index-based access");
 
-        ArrayList<String> todoList = new ArrayList<>();
+        ArrayList<String> todoItems = new ArrayList<>();
 
-        todoList.add("Wake up");
-        todoList.add("Study Java");
-        todoList.add("Have lunch");
+        todoItems.add("Wake up");
+        todoItems.add("Study Java");
+        todoItems.add("Have lunch");
 
         System.out.println("Initial list:");
-        printArrayList(todoList);
+        printArrayList(todoItems);
 
         // Insert at index (shifts elements to the right).
-        todoList.add(1, "Take a shower");
+        todoItems.add(1, "Take a shower");
 
         System.out.println();
         System.out.println("After insert at index 1:");
-        printArrayList(todoList);
+        printArrayList(todoItems);
 
         // Update by index.
-        todoList.set(2, "Study Java (focused)");
+        todoItems.set(2, "Study Java (focused)");
 
         System.out.println();
         System.out.println("After set at index 2:");
-        printArrayList(todoList);
+        printArrayList(todoItems);
 
         // Remove by index.
-        todoList.remove(0);
+        todoItems.remove(0);
 
         System.out.println();
         System.out.println("After remove at index 0:");
-        printArrayList(todoList);
+        printArrayList(todoItems);
 
         System.out.println();
-        System.out.println("Size = " + todoList.size());
-        System.out.println("IndexOf(\"Have lunch\") = " + todoList.indexOf("Have lunch"));
+        System.out.println("Size = " + todoItems.size());
+        System.out.println("IndexOf(\"Have lunch\") = " + todoItems.indexOf("Have lunch"));
     }
 
-    private static void printArrayList(ArrayList<String> list) {
-        for (int i = 0; i < list.size(); ++i) {
-            System.out.println(i + ": " + list.get(i));
+    private static void printArrayList(ArrayList<String> items) {
+        for (int i = 0; i < items.size(); ++i) {
+            System.out.println(i + ": " + items.get(i));
         }
     }
 
@@ -81,34 +106,34 @@ public final class CollectionsExample {
     private static void demoHashMap() {
         printSectionTitle("HashMap: key -> value mapping, check key existence");
 
-        HashMap<Integer, String> nameById = new HashMap<>();
+        HashMap<Integer, String> namesById = new HashMap<>();
 
-        nameById.put(1, "Alice");
-        nameById.put(2, "Bob");
-        nameById.put(3, "Charlie");
+        namesById.put(1, "Alice");
+        namesById.put(2, "Bob");
+        namesById.put(3, "Charlie");
 
-        System.out.println("Size (key count) = " + nameById.size());
+        System.out.println("Size (key count) = " + namesById.size());
 
         System.out.println();
         System.out.println("Get by key:");
-        System.out.println("Key 2 -> " + nameById.get(2));
-        System.out.println("Key 99 -> " + nameById.get(99));
+        System.out.println("Key 2 -> " + namesById.get(2));
+        System.out.println("Key 99 -> " + namesById.get(99));
 
         System.out.println();
         System.out.println("containsKey checks the key only:");
-        System.out.println("containsKey(1): " + nameById.containsKey(1));
-        System.out.println("containsKey(99): " + nameById.containsKey(99));
+        System.out.println("containsKey(1): " + namesById.containsKey(1));
+        System.out.println("containsKey(99): " + namesById.containsKey(99));
 
         System.out.println();
         System.out.println("Overwrite value for key 2:");
-        nameById.put(2, "Bobby");
-        System.out.println("Key 2 -> " + nameById.get(2));
+        namesById.put(2, "Bobby");
+        System.out.println("Key 2 -> " + namesById.get(2));
 
         System.out.println();
         System.out.println("Remove key 3:");
-        System.out.println("remove(3) -> " + nameById.remove(3));
-        System.out.println("containsKey(3): " + nameById.containsKey(3));
-        System.out.println("Size = " + nameById.size());
+        System.out.println("remove(3) -> " + namesById.remove(3));
+        System.out.println("containsKey(3): " + namesById.containsKey(3));
+        System.out.println("Size = " + namesById.size());
     }
 
     private static void printHeader(String title) {

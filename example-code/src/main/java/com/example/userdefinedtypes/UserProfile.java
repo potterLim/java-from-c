@@ -1,46 +1,46 @@
 package com.example.userdefinedtypes;
 
 public class UserProfile {
-    private String nickname;
-    private SubscriptionTier tier;
+    private String mNickname;
+    private ESubscriptionTier mTier;
 
     public UserProfile() {
-        // nickname is not explicitly initialized -> default value is null
-        // tier is not explicitly initialized     -> default value is null
+        // mNickname is not explicitly initialized -> default value is null
+        // mTier is not explicitly initialized     -> default value is null
     }
 
-    public UserProfile(String nickname) {
-        this.nickname = nickname;
-        tier = SubscriptionTier.FREE;
+    public UserProfile(String nicknameOrNull) {
+        mNickname = nicknameOrNull;
+        mTier = ESubscriptionTier.FREE;
     }
 
-    public UserProfile(String nickname, SubscriptionTier tier) {
-        this.nickname = nickname;
+    public UserProfile(String nicknameOrNull, ESubscriptionTier tierOrNull) {
+        mNickname = nicknameOrNull;
 
-        if (tier == null) {
-            this.tier = SubscriptionTier.FREE;
+        if (tierOrNull == null) {
+            mTier = ESubscriptionTier.FREE;
         } else {
-            this.tier = tier;
+            mTier = tierOrNull;
         }
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getNicknameOrNull() {
+        return mNickname;
     }
 
-    public SubscriptionTier getTier() {
-        return tier;
+    public ESubscriptionTier getTierOrNull() {
+        return mTier;
     }
 
     public void printSummary() {
-        String printedNickname = nickname;
+        String printedNickname = mNickname;
         if (printedNickname == null) {
             printedNickname = "(not set)";
         }
 
         String printedTier = "(not set)";
-        if (tier != null) {
-            printedTier = tier.toString();
+        if (mTier != null) {
+            printedTier = mTier.toString();
         }
 
         System.out.println("nickname = " + printedNickname);

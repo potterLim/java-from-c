@@ -1,10 +1,11 @@
-package com.example.expressiveness;
+package com.example.expressivenessandmethoddesign;
 
-import java.lang.StringBuilder;
+public final class ExpressivenessAndMethodDesignExample {
+    private ExpressivenessAndMethodDesignExample() {
+    }
 
-public final class ExpressivenessExample {
     public static void main(String[] args) {
-        printHeader("Expressiveness");
+        printHeader("Expressiveness and Method Design");
 
         demoOverloading();
         demoStringBuilder();
@@ -20,8 +21,8 @@ public final class ExpressivenessExample {
         int total = add(3, 4);
         double average = add(3.0, 4.0) / 2.0;
 
-        System.out.println("Add(int, int) -> " + total);
-        System.out.println("Add(double, double) / 2 -> " + average);
+        System.out.println("add(int, int) -> " + total);
+        System.out.println("add(double, double) / 2 -> " + average);
     }
 
     private static void log(String message) {
@@ -32,16 +33,16 @@ public final class ExpressivenessExample {
         System.out.println("[" + category + "] " + message);
     }
 
-    private static void log(String category, String message, int code) {
-        System.out.println("[" + category + "-" + code + "] " + message);
+    private static void log(String category, String message, int statusCode) {
+        System.out.println("[" + category + "-" + statusCode + "] " + message);
     }
 
-    private static int add(int a, int b) {
-        return a + b;
+    private static int add(int leftValue, int rightValue) {
+        return leftValue + rightValue;
     }
 
-    private static double add(double a, double b) {
-        return a + b;
+    private static double add(double leftValue, double rightValue) {
+        return leftValue + rightValue;
     }
 
     private static void demoStringBuilder() {
@@ -58,35 +59,35 @@ public final class ExpressivenessExample {
 
     private static String buildCsv(String[] items) {
         // Join items into a single line without repeated String concatenation.
-        StringBuilder sb = new StringBuilder(32);
+        StringBuilder csvBuilder = new StringBuilder(32);
 
         for (int i = 0; i < items.length; ++i) {
             if (i > 0) {
-                sb.append(',');
+                csvBuilder.append(',');
             }
 
-            sb.append(items[i]);
+            csvBuilder.append(items[i]);
         }
 
-        return sb.toString();
+        return csvBuilder.toString();
     }
 
-    private static String buildNumberReport(int n) {
+    private static String buildNumberReport(int maxNumber) {
         // Build a multi-line report using append chains.
-        StringBuilder sb = new StringBuilder(64);
+        StringBuilder reportBuilder = new StringBuilder(64);
 
-        sb.append("Number Report").append('\n');
-        sb.append("=============").append('\n');
+        reportBuilder.append("Number Report").append('\n');
+        reportBuilder.append("=============").append('\n');
 
-        for (int i = 1; i <= n; ++i) {
-            sb.append("i=").append(i);
-            sb.append(", square=").append(i * i);
-            sb.append('\n');
+        for (int i = 1; i <= maxNumber; ++i) {
+            reportBuilder.append("i=").append(i);
+            reportBuilder.append(", square=").append(i * i);
+            reportBuilder.append('\n');
         }
 
-        sb.append("End.").append('\n');
+        reportBuilder.append("End.").append('\n');
 
-        return sb.toString();
+        return reportBuilder.toString();
     }
 
     private static void printHeader(String title) {

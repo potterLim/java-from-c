@@ -1,8 +1,11 @@
 package com.example.userdefinedtypes;
 
-public class UserDefinedTypesExample {
+public final class UserDefinedTypesExample {
+    private UserDefinedTypesExample() {
+    }
+
     public static void main(String[] args) {
-        printHeader("06. User-Defined Types at the Language Level");
+        printHeader("User-Defined Types");
 
         demoMagicNumbers();
         demoEnums();
@@ -33,10 +36,10 @@ public class UserDefinedTypesExample {
     private static void demoEnums() {
         printSectionTitle("enum: a named type for related constants");
 
-        DownloadStatus status = DownloadStatus.QUEUED;
+        EDownloadStatus status = EDownloadStatus.QUEUED;
         System.out.println("status = " + status);
 
-        status = DownloadStatus.DOWNLOADING;
+        status = EDownloadStatus.DOWNLOADING;
         System.out.println("status = " + status);
 
         // The following line does not compile:
@@ -45,7 +48,7 @@ public class UserDefinedTypesExample {
         printStatusMessage(status);
     }
 
-    private static void printStatusMessage(DownloadStatus status) {
+    private static void printStatusMessage(EDownloadStatus status) {
         switch (status) {
             case QUEUED:
                 System.out.println("The task is waiting to start.");
@@ -60,8 +63,7 @@ public class UserDefinedTypesExample {
                 System.out.println("The task finished with an error.");
                 break;
             default:
-                System.out.println("Unexpected status: " + status);
-                break;
+                assert (false) : "Unexpected download status: " + status;
         }
     }
 
@@ -96,7 +98,7 @@ public class UserDefinedTypesExample {
         System.out.println("primaryTask is null: " + (primaryTask == null));
 
         // Calling a method through null causes a runtime error (NullPointerException):
-        // primaryTask.Start();
+        // primaryTask.start();
     }
 
     private static void demoDefaultValues() {
@@ -115,7 +117,7 @@ public class UserDefinedTypesExample {
         UserProfile guest = new UserProfile("guest");
         guest.printSummary();
 
-        UserProfile subscriber = new UserProfile("alice", SubscriptionTier.PRO);
+        UserProfile subscriber = new UserProfile("alice", ESubscriptionTier.PRO);
         subscriber.printSummary();
     }
 
@@ -137,19 +139,19 @@ public class UserDefinedTypesExample {
     private static void demoStaticMembers() {
         printSectionTitle("static members belong to the class");
 
-        int before = DownloadTask.getCreatedTaskCount();
+        int createdTaskCountBefore = DownloadTask.getCreatedTaskCount();
 
-        DownloadTask t1 = new DownloadTask("a.txt", 10);
-        DownloadTask t2 = new DownloadTask("b.txt", 20);
+        DownloadTask firstTask = new DownloadTask("a.txt", 10);
+        DownloadTask secondTask = new DownloadTask("b.txt", 20);
 
-        int after = DownloadTask.getCreatedTaskCount();
+        int createdTaskCountAfter = DownloadTask.getCreatedTaskCount();
 
-        System.out.println("createdTaskCount (before) = " + before);
-        System.out.println("createdTaskCount (after)  = " + after);
-        System.out.println("created in this section   = " + (after - before));
+        System.out.println("createdTaskCount (before) = " + createdTaskCountBefore);
+        System.out.println("createdTaskCount (after)  = " + createdTaskCountAfter);
+        System.out.println("created in this section   = " + (createdTaskCountAfter - createdTaskCountBefore));
 
-        System.out.println("t1 id = " + t1.getId());
-        System.out.println("t2 id = " + t2.getId());
+        System.out.println("firstTask id = " + firstTask.getId());
+        System.out.println("secondTask id = " + secondTask.getId());
         System.out.println("A static field is shared by all objects of the class.");
     }
 

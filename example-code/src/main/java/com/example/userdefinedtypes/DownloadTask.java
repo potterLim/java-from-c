@@ -1,75 +1,75 @@
 package com.example.userdefinedtypes;
 
 public class DownloadTask {
-    private static int createdTaskCount;
-    private static int nextId = 1;
+    private static int sCreatedTaskCount;
+    private static int sNextId = 1;
 
-    private final int id;
-    private final String fileName;
-    private final long totalBytes;
+    private final int mId;
+    private final String mFileName;
+    private final long mTotalBytes;
 
-    private DownloadStatus status;
-    private long downloadedBytes;
+    private EDownloadStatus mStatus;
+    private long mDownloadedBytes;
 
-    public DownloadTask(String fileName, long totalBytes) {
-        ++createdTaskCount;
-        id = nextId;
-        ++nextId;
+    public DownloadTask(String fileNameOrNull, long totalBytes) {
+        ++sCreatedTaskCount;
+        mId = sNextId;
+        ++sNextId;
 
-        if (fileName == null || fileName.isEmpty()) {
-            this.fileName = "unknown";
+        if (fileNameOrNull == null || fileNameOrNull.isEmpty()) {
+            mFileName = "unknown";
         } else {
-            this.fileName = fileName;
+            mFileName = fileNameOrNull;
         }
 
         if (totalBytes < 0) {
-            this.totalBytes = 0;
+            mTotalBytes = 0;
         } else {
-            this.totalBytes = totalBytes;
+            mTotalBytes = totalBytes;
         }
 
-        status = DownloadStatus.QUEUED;
-        downloadedBytes = 0;
+        mStatus = EDownloadStatus.QUEUED;
+        mDownloadedBytes = 0;
     }
 
     public int getId() {
-        return id;
+        return mId;
     }
 
     public String getFileName() {
-        return fileName;
+        return mFileName;
     }
 
     public long getTotalBytes() {
-        return totalBytes;
+        return mTotalBytes;
     }
 
     public long getDownloadedBytes() {
-        return downloadedBytes;
+        return mDownloadedBytes;
     }
 
-    public DownloadStatus getStatus() {
-        return status;
+    public EDownloadStatus getStatus() {
+        return mStatus;
     }
 
     public void start() {
-        if (status != DownloadStatus.QUEUED) {
+        if (mStatus != EDownloadStatus.QUEUED) {
             return;
         }
 
-        status = DownloadStatus.DOWNLOADING;
+        mStatus = EDownloadStatus.DOWNLOADING;
     }
 
     public void fail() {
-        if (status == DownloadStatus.COMPLETED) {
+        if (mStatus == EDownloadStatus.COMPLETED) {
             return;
         }
 
-        status = DownloadStatus.FAILED;
+        mStatus = EDownloadStatus.FAILED;
     }
 
     public void addProgress(long bytes) {
-        if (status != DownloadStatus.DOWNLOADING) {
+        if (mStatus != EDownloadStatus.DOWNLOADING) {
             return;
         }
 
@@ -77,15 +77,15 @@ public class DownloadTask {
             return;
         }
 
-        downloadedBytes += bytes;
+        mDownloadedBytes += bytes;
 
-        if (downloadedBytes >= totalBytes) {
-            downloadedBytes = totalBytes;
-            status = DownloadStatus.COMPLETED;
+        if (mDownloadedBytes >= mTotalBytes) {
+            mDownloadedBytes = mTotalBytes;
+            mStatus = EDownloadStatus.COMPLETED;
         }
     }
 
     public static int getCreatedTaskCount() {
-        return createdTaskCount;
+        return sCreatedTaskCount;
     }
 }

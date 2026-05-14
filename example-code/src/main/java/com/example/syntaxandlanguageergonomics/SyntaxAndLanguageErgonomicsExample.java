@@ -1,16 +1,20 @@
-package com.example.syntacticconvenience;
+package com.example.syntaxandlanguageergonomics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public final class SyntacticConvenienceExample {
+public final class SyntaxAndLanguageErgonomicsExample {
+    private SyntaxAndLanguageErgonomicsExample() {
+    }
+
     public static void main(String[] args) {
-        printHeader("Syntactic Convenience");
+        printHeader("Syntax and Language Ergonomics");
 
         demoForeachWithList();
         demoForeachWithSet();
         demoForeachWithMap();
+        demoForeachVariableReassignment();
         demoVarBasics();
         demoVarWithForeach();
     }
@@ -18,7 +22,7 @@ public final class SyntacticConvenienceExample {
     private static void demoForeachWithList() {
         printSectionTitle("foreach with ArrayList: value-based iteration");
 
-        ArrayList<Integer> scores = new ArrayList<Integer>();
+        ArrayList<Integer> scores = new ArrayList<>();
         scores.add(70);
         scores.add(85);
         scores.add(90);
@@ -43,16 +47,16 @@ public final class SyntacticConvenienceExample {
         System.out.println("Average score = " + average);
     }
 
-    private static void printIndexedList(ArrayList<Integer> list) {
-        for (int i = 0; i < list.size(); ++i) {
-            System.out.println(i + ": " + list.get(i));
+    private static void printIndexedList(ArrayList<Integer> scores) {
+        for (int i = 0; i < scores.size(); ++i) {
+            System.out.println(i + ": " + scores.get(i));
         }
     }
 
     private static void demoForeachWithSet() {
         printSectionTitle("foreach with HashSet: unique elements");
 
-        HashSet<String> commands = new HashSet<String>();
+        HashSet<String> commands = new HashSet<>();
 
         commands.add("start");
         commands.add("stop");
@@ -66,28 +70,51 @@ public final class SyntacticConvenienceExample {
         for (String command : commands) {
             System.out.println("  " + command);
         }
-
-        System.out.println();
-        System.out.println("Note: foreach is for reading, not modifying.");
     }
 
     private static void demoForeachWithMap() {
         printSectionTitle("foreach with HashMap: key-value pairs");
 
-        HashMap<String, Integer> stock = new HashMap<String, Integer>();
-        stock.put("apple", 3);
-        stock.put("banana", 5);
-        stock.put("orange", 2);
+        HashMap<String, Integer> stockCountsByItemName = new HashMap<>();
+        stockCountsByItemName.put("apple", 3);
+        stockCountsByItemName.put("banana", 5);
+        stockCountsByItemName.put("orange", 2);
 
         int total = 0;
 
-        for (HashMap.Entry<String, Integer> entry : stock.entrySet()) {
+        for (HashMap.Entry<String, Integer> entry : stockCountsByItemName.entrySet()) {
             System.out.println("item=" + entry.getKey() + ", count=" + entry.getValue());
             total += entry.getValue();
         }
 
         System.out.println();
         System.out.println("Total item count = " + total);
+    }
+
+    private static void demoForeachVariableReassignment() {
+        printSectionTitle("foreach variable reassignment does not replace elements");
+
+        ArrayList<String> commands = new ArrayList<>();
+        commands.add("start");
+        commands.add("stop");
+        commands.add("pause");
+
+        System.out.println("Before:");
+        printStringList(commands);
+
+        for (String command : commands) {
+            command = command.toUpperCase();
+        }
+
+        System.out.println();
+        System.out.println("After reassigning the foreach variable:");
+        printStringList(commands);
+    }
+
+    private static void printStringList(ArrayList<String> values) {
+        for (int i = 0; i < values.size(); ++i) {
+            System.out.println(i + ": " + values.get(i));
+        }
     }
 
     private static void demoVarBasics() {
@@ -106,26 +133,26 @@ public final class SyntacticConvenienceExample {
     private static void demoVarWithForeach() {
         printSectionTitle("var with foreach");
 
-        ArrayList<String> messages = new ArrayList<String>();
+        ArrayList<String> messages = new ArrayList<>();
         messages.add("INFO");
         messages.add("WARN");
         messages.add("INFO");
         messages.add("ERROR");
 
-        HashMap<String, Integer> counts = new HashMap<String, Integer>();
+        HashMap<String, Integer> messageCountsByMessage = new HashMap<>();
 
-        for (var msg : messages) {
+        for (var message : messages) {
             int currentCount = 0;
-            if (counts.containsKey(msg)) {
-                currentCount = counts.get(msg);
+            if (messageCountsByMessage.containsKey(message)) {
+                currentCount = messageCountsByMessage.get(message);
             }
 
-            counts.put(msg, currentCount + 1);
+            messageCountsByMessage.put(message, currentCount + 1);
         }
 
         System.out.println("Message counts:");
 
-        for (var entry : counts.entrySet()) {
+        for (var entry : messageCountsByMessage.entrySet()) {
             System.out.println("  " + entry.getKey() + " -> " + entry.getValue());
         }
     }

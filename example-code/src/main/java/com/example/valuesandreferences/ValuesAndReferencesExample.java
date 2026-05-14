@@ -1,8 +1,11 @@
 package com.example.valuesandreferences;
 
 public final class ValuesAndReferencesExample {
+    private ValuesAndReferencesExample() {
+    }
+
     public static void main(String[] args) {
-        printHeader("Values & References");
+        printHeader("Values and References");
 
         demoPrimitiveCopy();
         demoArrayReferenceMutation();
@@ -13,13 +16,13 @@ public final class ValuesAndReferencesExample {
     private static void demoPrimitiveCopy() {
         printSectionTitle("Primitive assignment makes a copy");
 
-        int a = 10;
-        int b = a;
+        int originalValue = 10;
+        int copiedValue = originalValue;
 
-        b += 5;
+        copiedValue += 5;
 
-        System.out.println("a = " + a);
-        System.out.println("b = " + b);
+        System.out.println("originalValue = " + originalValue);
+        System.out.println("copiedValue   = " + copiedValue);
     }
 
     private static void demoArrayReferenceMutation() {
@@ -27,12 +30,12 @@ public final class ValuesAndReferencesExample {
 
         int[] scores = new int[]{ 10, 20, 30 };
 
-        System.out.println("Before IncreaseAll(scores, 7):");
+        System.out.println("Before increaseAll(scores, 7):");
         printIntArray(scores);
 
         increaseAll(scores, 7);
 
-        System.out.println("After IncreaseAll(scores, 7):");
+        System.out.println("After increaseAll(scores, 7):");
         printIntArray(scores);
     }
 
@@ -46,15 +49,15 @@ public final class ValuesAndReferencesExample {
     private static void demoParameterReassignDoesNotAffectCaller() {
         printSectionTitle("Reassigning a parameter does not change the caller variable");
 
-        int[] data = new int[]{ 1, 2, 3 };
+        int[] numbers = new int[]{ 1, 2, 3 };
 
-        System.out.println("Before ReplaceArrayInside(data):");
-        printIntArray(data);
+        System.out.println("Before replaceArrayInside(numbers):");
+        printIntArray(numbers);
 
-        replaceArrayInside(data);
+        replaceArrayInside(numbers);
 
-        System.out.println("After ReplaceArrayInside(data):");
-        printIntArray(data);
+        System.out.println("After replaceArrayInside(numbers):");
+        printIntArray(numbers);
 
         System.out.println("Note: The parameter was reassigned, but the caller still points to the original array.");
     }
@@ -70,13 +73,13 @@ public final class ValuesAndReferencesExample {
 
         String text = "Hello";
 
-        System.out.println("Before AppendSuffix(text): " + text);
+        System.out.println("Before appendSuffix(text): " + text);
         appendSuffix(text);
-        System.out.println("After AppendSuffix(text):  " + text);
+        System.out.println("After appendSuffix(text):  " + text);
 
         System.out.println("Fix: Use the return value");
         text = appendSuffixReturn(text);
-        System.out.println("After text = AppendSuffixReturn(text): " + text);
+        System.out.println("After text = appendSuffixReturn(text): " + text);
     }
 
     private static void appendSuffix(String text) {
