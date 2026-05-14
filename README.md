@@ -35,7 +35,7 @@
 |  02  | Expression Evaluator   | [lab-02] |
 |  03  | TODO Analyzer          | [lab-03] |
 |  04  | Space Convoy Simulator | [lab-04] |
-|  05  | Data Structures        | [lab-05] |
+|  05  | Linear Data Structures | [lab-05] |
 
 ## 학습 방법
 
@@ -60,7 +60,7 @@
 
 이 저장소를 통해 공부하시다가 내용, 실습, 설명 등에 대해 궁금한 점이 생기면 언제든지 potterLim0808@gmail.com으로 문의 주시면 성실히 답변드리겠습니다.
 
-> 최종 수정일: 2026. 05. 14.
+> 최종 수정일: 2026. 05. 15.
 
 [01-language-classification-and-design-perspectives]: ./notes/01-language-classification-and-design-perspectives.pdf
 [02-values-and-references]: ./notes/02-values-and-references.pdf
@@ -70,13 +70,14 @@
 [06-user-defined-types]: ./notes/06-user-defined-types.pdf
 
 [example-02]: ./example-code/src/main/java/com/example/valuesandreferences/
-[example-03]: ./example-code/src/main/java/com/example/expressiveness/
-[example-04]: ./example-code/src/main/java/com/example/collections/
-[example-05]: ./example-code/src/main/java/com/example/syntacticconvenience/
+[example-03]: ./example-code/src/main/java/com/example/expressivenessandmethoddesign/
+[example-04]: ./example-code/src/main/java/com/example/collectiondatamanagement/
+[example-05]: ./example-code/src/main/java/com/example/syntaxandlanguageergonomics/
 [example-06]: ./example-code/src/main/java/com/example/userdefinedtypes/
 
 [lab-01]: ./lab/01-big-number-calculator/SPEC.md
 [lab-02]: ./lab/02-expression-evaluator/SPEC.md
 [lab-03]: ./lab/03-todo-analyzer/SPEC.md
 [lab-04]: ./lab/04-space-convoy/SPEC.md
-[lab-05]: ./lab/05-data-structures/SPEC.md
+[lab-05]: ./lab/05-linear-data-structures/SPEC.md
+
