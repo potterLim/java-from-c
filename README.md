@@ -15,14 +15,14 @@
 
 각 장별 학습 노트는 [`notes/`](./notes) 디렉터리에, 예시 코드는 [`example-code/`](./example-code) 디렉터리에 정리되어 있습니다.
 
-| 번호 | 주제                          | 노트                                               | 예시 코드    |
-| :--  | :---------------------------- | :------------------------------------------------- | :----------: |
-| 01   | 언어 분류와 설계 관점         | [01-language-classification-and-design-perspectives] |      -       |
-| 02   | 값과 참조                     | [02-values-and-references]                         | [example-02] |
-| 03   | 표현력과 메서드 설계          | [03-expressiveness-and-method-design]              | [example-03] |
-| 04   | 컬렉션을 활용한 데이터 관리   | [04-managing-data-with-collections]                | [example-04] |
-| 05   | 문법과 언어 사용성            | [05-syntax-and-language-ergonomics]                | [example-05] |
-| 06   | 사용자 정의 자료형            | [06-user-defined-types]                            | [example-06] |
+| 번호 | 주제                          | 노트                 | 예시 코드    |
+| :--  | :---------------------------- | :------------------: | :----------: |
+| 01   | 언어 분류와 설계 관점         | [강의 노트][note-01] |      -       |
+| 02   | 값과 참조                     | [강의 노트][note-02] | [example-02] |
+| 03   | 표현력과 메서드 설계          | [강의 노트][note-03] | [example-03] |
+| 04   | 컬렉션을 활용한 데이터 관리   | [강의 노트][note-04] | [example-04] |
+| 05   | 문법과 언어 사용성            | [강의 노트][note-05] | [example-05] |
+| 06   | 사용자 정의 자료형            | [강의 노트][note-06] | [example-06] |
 
 ## 실습
 
@@ -45,9 +45,10 @@
 2. `example-code/`의 예제를 통해 해당 개념이 코드로 어떻게 나타나는지 확인한다.
 3. `lab/`의 실습을 통해 직접 코드를 작성하며 적용해본다.
 
-실습을 진행할 때는 단순히 동작하는 코드를 만드는 데서 그치지 않고, [코딩 표준](./java-coding-standard.md)을 바탕으로 일관된 이름, 명확한 흐름, 읽기 쉬운 구조를 갖춘 코드를 작성하는 훈련을 함께 한다.
+예시 코드와 실습 코드는 [코딩 표준](./java-coding-standard.md)을 기준으로 작성되어 있습니다.  
+실습을 진행할 때는 단순히 동작하는 코드를 만드는 데서 그치지 않고, 일관된 이름, 명확한 흐름, 읽기 쉬운 구조를 갖춘 코드를 작성하는 훈련을 함께 합니다.
 
-강의 노트의 예시는 Java 문법과 개념을 설명하기 위해 일반적인 Java 관례를 기준으로 작성되어 있습니다. 일반적인 Java 관례와 다른 고유의 코딩 표준은 강의 노트 예시에 일괄 반영하지 않았습니다.
+강의 노트의 예시는 Java 문법과 개념을 설명하기 위해 일반적인 Java 관례를 기준으로 작성되어 있습니다. 제공된 코딩 표준 중 일반적인 Java 관례와 다른 일부 규칙은 강의 노트 예시에 일괄 반영하지 않았습니다.
 
 ## 부정확한 내용에 대한 기여
 
@@ -62,12 +63,12 @@
 
 > 최종 수정일: 2026. 05. 15.
 
-[01-language-classification-and-design-perspectives]: ./notes/01-language-classification-and-design-perspectives.pdf
-[02-values-and-references]: ./notes/02-values-and-references.pdf
-[03-expressiveness-and-method-design]: ./notes/03-expressiveness-and-method-design.pdf
-[04-managing-data-with-collections]: ./notes/04-managing-data-with-collections.pdf
-[05-syntax-and-language-ergonomics]: ./notes/05-syntax-and-language-ergonomics.pdf
-[06-user-defined-types]: ./notes/06-user-defined-types.pdf
+[note-01]: ./notes/01-language-classification-and-design-perspectives.pdf
+[note-02]: ./notes/02-values-and-references.pdf
+[note-03]: ./notes/03-expressiveness-and-method-design.pdf
+[note-04]: ./notes/04-managing-data-with-collections.pdf
+[note-05]: ./notes/05-syntax-and-language-ergonomics.pdf
+[note-06]: ./notes/06-user-defined-types.pdf
 
 [example-02]: ./example-code/src/main/java/com/example/valuesandreferences/
 [example-03]: ./example-code/src/main/java/com/example/expressivenessandmethoddesign/

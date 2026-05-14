@@ -23,16 +23,16 @@
 
 ## Java 실습 목록
 
-| 번호 | 제목                   | 경로                                                      |
-| :--  | :--------------------- | :-------------------------------------------------------- |
-|  01  | Big Number Calculator  | [`01-big-number-calculator`](./01-big-number-calculator/) |
-|  02  | Expression Evaluator   | [`02-expression-evaluator`](./02-expression-evaluator/)   |
-|  03  | TODO Analyzer          | [`03-todo-analyzer`](./03-todo-analyzer/)                 |
-|  04  | Space Convoy Simulator | [`04-space-convoy`](./04-space-convoy/)                   |
-|  05  | Linear Data Structures | [`05-linear-data-structures`](./05-linear-data-structures/) |
+| 번호 | 제목                   | 과제                |
+| :--  | :--------------------- | :-----------------: |
+|  01  | Big Number Calculator  | [과제 보기][lab-01] |
+|  02  | Expression Evaluator   | [과제 보기][lab-02] |
+|  03  | TODO Analyzer          | [과제 보기][lab-03] |
+|  04  | Space Convoy Simulator | [과제 보기][lab-04] |
+|  05  | Linear Data Structures | [과제 보기][lab-05] |
 
-각 실습 디렉터리에는 과제 설명 파일(`SPEC.md`), 검증용 `Main` 클래스, 예시 코드가 있다.  
-과제 명세를 꼼꼼히 읽고 검증용 `Main` 클래스로 주요 동작을 확인한 후 예시 코드와 본인의 구현을 비교·분석하면 학습 효과를 더욱 높일 수 있다.
+각 실습 디렉터리에는 과제 설명 파일(`SPEC.md`), 검증용 `Main` 클래스, 예시 코드가 함께 제공된다.  
+과제 명세를 꼼꼼히 읽고 검증용 `Main` 클래스로 주요 동작을 확인한 뒤, 예시 코드와 본인의 구현을 비교·분석하면 학습 효과를 더욱 높일 수 있다.
 
 ## 검증용 Main 실행
 
@@ -60,7 +60,7 @@
 
 ## 코딩 표준과 가독성
 
-모든 실습은 제공된 [Java 코딩 표준](../java-coding-standard.md)을 기준으로 작성한다.
+각 실습에서 학습자가 구현하는 코드, 검증용 `Main` 클래스, 제공 예시 코드는 [코딩 표준](../java-coding-standard.md)을 기준으로 작성되어 있다.
 
 이 실습들은 단순히 동작하는 코드를 작성하는 데서 그치지 않고 일관된 스타일과 읽기 쉬운 구조를 유지하며 구현하는 습관을 함께 훈련하는 것을 목표로 한다.
 
@@ -214,3 +214,9 @@ IntelliJ 오른쪽 Gradle 창에서 다음 버튼 클릭:
 - `Sync All Gradle Projects` (새로고침 아이콘)
 
 정상이라면 Gradle 창에 모든 실습 모듈이 표시된다.
+
+[lab-01]: ./01-big-number-calculator/SPEC.md
+[lab-02]: ./02-expression-evaluator/SPEC.md
+[lab-03]: ./03-todo-analyzer/SPEC.md
+[lab-04]: ./04-space-convoy/SPEC.md
+[lab-05]: ./05-linear-data-structures/SPEC.md
