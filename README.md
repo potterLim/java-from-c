@@ -37,7 +37,6 @@
 |  04  | Space Convoy Simulator | [lab-04] |
 |  05  | Data Structures        | [lab-05] |
 
-
 ## 학습 방법
 
 다음 순서로 학습하는 것을 권장합니다.
@@ -61,8 +60,7 @@
 
 이 저장소를 통해 공부하시다가 내용, 실습, 설명 등에 대해 궁금한 점이 생기면 언제든지 potterLim0808@gmail.com으로 문의 주시면 성실히 답변드리겠습니다.
 
-> 최종 수정일: 2026. 05. 10.
-
+> 최종 수정일: 2026. 05. 14.
 
 [01-language-classification-and-design-perspectives]: ./notes/01-language-classification-and-design-perspectives.pdf
 [02-values-and-references]: ./notes/02-values-and-references.pdf
