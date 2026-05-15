@@ -1,4 +1,4 @@
-# Big Number Calculator 실습 
+# Big Number Calculator 실습
 
 `int`(32비트 정수형)와 `long`(64비트 정수형)은 표현할 수 있는 정수의 범위가 고정되어 있으므로 매우 큰 정수 값을 표현하고 연산하기에 적합하지 않다. 덧셈이나 뺄셈과 같은 기본 연산에서도 결과가 표현 가능한 최댓값을 넘거나 최솟값보다 작아지면 오버플로 또는 언더플로가 발생한다.  
 `double`과 같은 부동소수점 자료형을 사용할 수도 있으나 이는 근본적으로 오차를 포함할 수 있으므로 정확한 정수 연산이 요구되는 상황에는 적합하지 않다.
@@ -27,16 +27,25 @@
 
 - 필수 요구 사항은 아니지만 `String`을 이용한 반복적인 수정 작업은 불필요한 연산 비용을 유발할 수 있으므로 상황에 따라 보다 효율적인 구현 방법을 고려하는 것이 바람직하다.
 
-- 실습 명세에 명시되지 않은 동작은 제공된 예시 코드를 기준으로 추론하여 구현한다.
-    - 예시 코드로도 추론이 어려운 경우 명세의 규칙을 위반하지 않는 범위 내에서 합리적으로 판단하여 구현한다.
+- 실습 명세에 명시되지 않은 동작은 제공된 검증용 `Main` 코드를 기준으로 추론하여 구현한다.
+    - 검증용 `Main` 코드로도 추론이 어려운 경우 명세의 규칙을 위반하지 않는 범위 내에서 합리적으로 판단하여 구현한다.
 
 ## 1. 프로젝트를 준비한다
 
 1. IntelliJ에서 `java-labs` 프로젝트를 연다.
 2. `01-big-number-calculator` 디렉터리로 이동한다.
-3. `01-big-number-calculator` 디렉터리에 제공된 `src/main/java` 디렉터리를 확인한다.
-4. `src/main/java` 디렉터리 아래의 `com.example.bignumber` 패키지를 확인한다.
-5. `com.example.bignumber` 패키지에 `BigNumberCalculator` 클래스를 정의한다.
+3. `src/main/java` 디렉터리를 생성한다.
+4. `src/main/java` 아래에 `com.example.bignumber` 패키지를 생성한다.
+5. 제공된 검증용 [`Main.java`](./src/main/java/com/example/bignumber/Main.java)와 같은 내용의 파일을 본인의 `java-labs` 프로젝트에 아래 경로로 생성한다.
+
+```text
+java-labs/
+ └─ 01-big-number-calculator/
+    └─ src/main/java/com/example/bignumber/Main.java
+```
+
+6. 검증용 `Main` 클래스는 수정하지 않는다.
+7. 같은 패키지에 `BigNumberCalculator` 클래스를 정의한다.
 
 ```java
 package com.example.bignumber;

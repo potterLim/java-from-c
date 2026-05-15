@@ -32,20 +32,29 @@
     - 구현에 필요하다면 추가적인 `private` 도움 메서드를 정의하는 것은 허용된다.
     - 구현에 필요하다면 추가적인 `private` 멤버 변수를 정의하는 것은 허용된다.
 
-- 실습 명세에 명시되지 않은 동작은 제공된 예시 코드를 기준으로 추론하여 구현한다.
-    - 예시 코드로도 추론이 어려운 경우 명세의 규칙을 위반하지 않는 범위 내에서 합리적으로 판단하여 구현한다.
+- 실습 명세에 명시되지 않은 동작은 제공된 검증용 `Main` 코드를 기준으로 추론하여 구현한다.
+    - 검증용 `Main` 코드로도 추론이 어려운 경우 명세의 규칙을 위반하지 않는 범위 내에서 합리적으로 판단하여 구현한다.
 
 ## 1. 프로젝트를 준비한다
 
 1. IntelliJ에서 `java-labs` 프로젝트를 연다.
 2. `05-linear-data-structures` 디렉터리로 이동한다.
-3. `05-linear-data-structures` 디렉터리에 제공된 `src/main/java` 디렉터리를 확인한다.
-4. `src/main/java` 디렉터리 아래의 `com.example.lineardatastructures` 패키지를 확인한다.
-5. `com.example.lineardatastructures` 패키지에 `IntValue` 클래스를 정의한다.
-6. `com.example.lineardatastructures` 패키지에 `List` 클래스를 정의한다.
-7. `com.example.lineardatastructures` 패키지에 `Stack` 클래스를 정의한다.
-8. `com.example.lineardatastructures` 패키지에 `Queue` 클래스를 정의한다.
-9. `com.example.lineardatastructures` 패키지에 `LinkedList` 클래스를 정의한다.
+3. `src/main/java` 디렉터리를 생성한다.
+4. `src/main/java` 아래에 `com.example.lineardatastructures` 패키지를 생성한다.
+5. 제공된 검증용 [`Main.java`](./src/main/java/com/example/lineardatastructures/Main.java)와 같은 내용의 파일을 본인의 `java-labs` 프로젝트에 아래 경로로 생성한다.
+
+```text
+java-labs/
+ └─ 05-linear-data-structures/
+    └─ src/main/java/com/example/lineardatastructures/Main.java
+```
+
+6. 검증용 `Main` 클래스는 수정하지 않는다.
+7. 같은 패키지에 `IntValue` 클래스를 정의한다.
+8. 같은 패키지에 `List` 클래스를 정의한다.
+9. 같은 패키지에 `Stack` 클래스를 정의한다.
+10. 같은 패키지에 `Queue` 클래스를 정의한다.
+11. 같은 패키지에 `LinkedList` 클래스를 정의한다.
 
 ## 2. 자료구조를 구현한다
 
