@@ -191,7 +191,7 @@ public BigDecimal calculateOrderTotalRecursive(OrderNode orderNode);
 - 값의 의미, 역할, 상태, 개수, 위치가 드러나야 한다.
 - 의미 없는 축약어, 임의의 약어, 단일 문자 변수 이름은 사용하지 않는다.
   - 단, 짧은 반복문 인덱스처럼 관례적으로 명확한 경우는 예외로 한다.
-- 단순 반복문 변수가 아닌 경우 `i`, `e` 같은 변수 이름 대신 `index`, `employee`처럼 저장된 데이터를 바로 알 수 있는 이름을 사용한다.
+- 단순 반복문 변수가 아닌 경우 `i`, `e` 같은 변수 이름 대신 `index`, `employee`처럼 변수에 담긴 값을 바로 알 수 있는 이름을 사용한다.
 - 컬렉션은 복수형으로 작성한다.
 - `Map` 같은 키-값 대응 컬렉션은 가능하면 `xxxByYyy` 형태를 사용한다.
 - `boolean` 변수는 `is`, `has`, `can`, `should`를 우선 사용한다.
